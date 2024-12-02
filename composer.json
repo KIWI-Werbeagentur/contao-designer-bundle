@@ -1,0 +1,34 @@
+{
+    "name": "kiwi/contao-designer",
+    "type": "contao-bundle",
+    "description": "",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Katrin Zimmermann",
+            "homepage": "https://github.com/diekatrin"
+        },
+        {
+            "name": "KIWI. Werbeagentur GmbH",
+            "homepage": "https://www.kiwi.de"
+        }
+    ],
+    "require": {
+        "php": "^8.4",
+        "contao/core-bundle": "~5.3.18",
+    },
+    "require-dev": {
+        "contao/manager-plugin": "^2.0"
+    },
+    "conflict": {
+        "contao/manager-plugin": "<2.0 || >=3.0",
+    },
+    "autoload": {
+        "psr-4" : {
+            "Kiwi\\Contao\\DesignerBundle\\" : "src/"
+        }
+    },
+    "extra":{
+        "contao-manager-plugin": "Kiwi\\Contao\\DesignerBundle\\ContaoManager\\Plugin"
+    }
+}
