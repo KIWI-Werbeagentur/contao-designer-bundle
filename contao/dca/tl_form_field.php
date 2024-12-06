@@ -9,5 +9,5 @@ $GLOBALS['TL_DCA']['tl_form_field']['palettes']['__selector__'][] = 'isCta';
 $GLOBALS['TL_DCA']['tl_form_field']['subpalettes']['isCta'] = 'ctaColor,ctaDesign';
 
 PaletteManipulator::create()
-    ->addField('isCta', 'type_legend', PaletteManipulator::POSITION_APPEND)
+    ->addField('isCta', 'template_legend', PaletteManipulator::POSITION_APPEND)
     ->applyToPalette('submit', 'tl_form_field');
