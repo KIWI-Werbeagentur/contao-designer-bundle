@@ -2,6 +2,9 @@
 
 use Contao\Controller;
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
+use Kiwi\Contao\DesignerBundle\DataContainer\TemplateListener;
+
+$GLOBALS['TL_DCA']['tl_content']['fields']['customTpl']['load_callback'][] = [TemplateListener::class, 'renameTemplates'];
 
 Controller::loadDataContainer('design');
 $GLOBALS['TL_DCA']['tl_content']['fields'] += $GLOBALS['TL_DCA']['cta']['fields'];
