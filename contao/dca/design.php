@@ -15,7 +15,7 @@ $GLOBALS['TL_DCA']['cta']['fields'] = [
     'ctaColor' => [
         'label' => &$GLOBALS['TL_LANG']['design']['ctaColor'],
         'inputType' => 'iconedSelect',
-        'options_callback' => [ColorListener::class, 'getCtaOptions'],
+        'options_callback' => [ColorListener::class, 'getCategoryOptions'],
         'icon_callback' => [ColorListener::class, 'getIcons'],
         'category' => 'cta',
         'eval' => ['tl_class' => 'clr w50', 'mandatory' => true],

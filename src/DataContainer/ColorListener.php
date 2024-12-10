@@ -167,7 +167,7 @@ class ColorListener
         throw new \Exception('Invalid color value.');
     }
 
-    public function getCtaOptions($objDca)
+    public function getCategoryOptions($objDca)
     {
         $arrOptions = [];
 
