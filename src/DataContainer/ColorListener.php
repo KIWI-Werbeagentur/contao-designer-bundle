@@ -12,7 +12,7 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class ColorListener
 {
-    public function updateScssFile(?DataContainer $dc = null, ?int $undoId = null)
+    public function updateScssFile(?DataContainer $objDca = null, ?int $undoId = null)
     {
         $fs = new Filesystem();
         $automator = new Automator();
@@ -26,7 +26,7 @@ class ColorListener
         // use undoId to distinguish ondelete_callback from onsubmit_callback
         if ($undoId) {
             // the record still exists at this point, so exclude its id
-            $collColors = ColorModel::findBy(['NOT id = ?'], $dc->id, ['return' => 'Collection']);
+            $collColors = ColorModel::findBy(['NOT id = ?'], $objDca->id, ['return' => 'Collection']);
         } else {
             $collColors = ColorModel::findAll(['return' => 'Collection']);
         }
@@ -41,14 +41,14 @@ class ColorListener
         $automator->purgeScriptCache();
     }
 
-    public function labelCallback(array $row, string $label, DataContainer $dc, array $labels): array
+    public function labelCallback(array $row, string $label, DataContainer $objDca, array $labels): array
     {
         $color = ColorHelper::getCssColorFromValue($row['value']);
 
         return ['<div style="height:1em;width:1em;background-color:' . $color . '"></div>', $labels[1], '<span style="font-family:monospace">$' . $labels[2] . '</span>'];
     }
 
-    public function valueSaveCallback(string $value, DataContainer $dc): string
+    public function valueSaveCallback(string $value, DataContainer $objDca): string
     {
         if (array_key_exists($value, ColorHelper::$arrHtmlColors)) {
             return ColorHelper::$arrHtmlColors[$value];
