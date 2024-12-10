@@ -2,12 +2,8 @@
 
 namespace Kiwi\Contao\DesignerBundle;
 
-use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 
-class KiwiDesignerBundle extends Bundle
+class KiwiDesignerBundle extends AbstractBundle
 {
-    public function getPath(): string
-    {
-        return \dirname(__DIR__);
-    }
 }
