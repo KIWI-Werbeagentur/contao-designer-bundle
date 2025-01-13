@@ -3,10 +3,10 @@
 use Kiwi\Contao\DesignerBundle\Widget\Backend\IconedSelectMenuWidget;
 use Kiwi\Contao\DesignerBundle\Models\ColorModel;
 
-$GLOBALS['design']['ctaDesigns'] = [
-    'btn' => 'btn btn-{{color}}',
-    'btn-outline' => 'btn btn-outline-{{color}}',
-    'link' => 'textlink textlink-{{color}}',
+$GLOBALS['design']['ctaDesign'] = [
+    'btn' => 'btn btn-{{ctaColor}}',
+    'btn-outline' => 'btn btn-outline-{{ctaColor}}',
+    'link' => 'textlink textlink-{{ctaColor}}',
 ];
 
 $GLOBALS['design']['color']['categories'] = [

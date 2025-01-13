@@ -25,7 +25,7 @@ $GLOBALS['TL_DCA']['cta']['fields'] = [
         'label' => &$GLOBALS['TL_LANG']['design']['ctaDesign'],
         'reference' => &$GLOBALS['TL_LANG']['design']['ctaDesign'],
         'inputType' => 'select',
-        'options' => array_keys($GLOBALS['design']['ctaDesigns']),
+        'options' => array_keys($GLOBALS['design']['ctaDesign']),
         'eval' => ['tl_class' => 'w50', 'mandatory' => true],
         'sql' => "varchar(35) NOT NULL default ''"
     ]
