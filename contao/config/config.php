@@ -14,6 +14,8 @@ $GLOBALS['design']['color']['categories'] = [
     'background'
 ];
 
+$GLOBALS['design']['headlineClass'] = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'display-1', 'display-2', 'display-3', 'display-4', 'display-5', 'display-6'];
+
 $GLOBALS['BE_MOD']['design']['color'] = [
     'tables' => ['tl_color'],
 ];
