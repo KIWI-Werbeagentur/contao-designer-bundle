@@ -10,6 +10,7 @@ class TemplateListener
 {
     #[AsCallback('tl_article', 'fields.customTpl.load')]
     #[AsCallback('tl_content', 'fields.customTpl.load')]
+    #[AsCallback('tl_module', 'fields.customTpl.load')]
     public function renameTemplates($varValue, DataContainer $objDca)
     {
         System::loadLanguageFile('templates');
