@@ -33,3 +33,21 @@ $GLOBALS['TL_LANG']['design']['headlineClass'] = [
         'h6' => 'h6',
     ]
 ];
+
+$GLOBALS['TL_LANG']['design']['background'] = [
+    'Hintergrund',
+    'options'=>[
+        'picture' => 'Bild',
+        'video' => 'Video',
+        'color' => 'Farbe',
+        'none' => 'Kein Hintergrund',
+    ]
+];
+
+$GLOBALS['TL_LANG']['design']['media'] = [
+    'Bild',
+];
+
+$GLOBALS['TL_LANG']['design']['color'] = [
+    'Farbe',
+];

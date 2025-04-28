@@ -6,11 +6,11 @@ use Kiwi\Contao\DesignerBundle\DataContainer\ColorListener;
 
 $GLOBALS['TL_DCA']['cta']['fields'] = [
     'isCta' => [
-        'label'     => &$GLOBALS['TL_LANG']['design']['isCta'],
+        'label' => &$GLOBALS['TL_LANG']['design']['isCta'],
         'reference' => &$GLOBALS['TL_LANG']['design']['isCta'],
         'inputType' => 'checkbox',
-        'eval'      => ['submitOnChange' => true, 'tl_class' => 'clr m12'],
-        'sql'       => "char(1) NOT NULL default '1'",
+        'eval' => ['submitOnChange' => true, 'tl_class' => 'clr m12'],
+        'sql' => "char(1) NOT NULL default '1'",
     ],
     'ctaColor' => [
         'label' => &$GLOBALS['TL_LANG']['design']['ctaColor'],
@@ -28,5 +28,60 @@ $GLOBALS['TL_DCA']['cta']['fields'] = [
         'options' => array_keys($GLOBALS['design']['ctaDesign']),
         'eval' => ['tl_class' => 'w50', 'mandatory' => true],
         'sql' => "varchar(35) NOT NULL default ''"
+    ],
+];
+
+$GLOBALS['TL_DCA']['background']['fields'] = [
+    'media' => [
+        'label' => $GLOBALS['TL_LANG']['design']['media'],
+        'inputType' => 'fileTree',
+        'eval' => ['filesOnly' => true, 'fieldType' => 'radio', 'mandatory' => true, 'tl_class' => 'clr'],
+        'load_callback' => [
+            ['tl_content', 'setSingleSrcFlags']
+        ]
+    ],
+    'color' => [
+        'label' => $GLOBALS['TL_LANG']['design']['color'],
+        'inputType' => 'iconedSelect',
+        'options_callback' => function () {
+            return ColorListener::getCategoryOptions(['table' => 'tl_article', 'field' => 'color']);
+        },
+        'icon_callback' => [ColorListener::class, 'getIcons'],
+        'category' => 'background',
+        'eval' => ['tl_class' => 'clr w50', 'mandatory' => true]
+    ],
+    'background' => [
+        'label' => $GLOBALS['TL_LANG']['design']['background'],
+        'reference' => $GLOBALS['TL_LANG']['design']['background']['options'],
+        'inputType' => 'optionalResponsiveSubpalette',
+        'responsiveInputType' => 'select',
+        'eval' => [
+            'mandatory' => true,
+            'tl_class' => 'clr',
+            'submitOnChange' => true,
+        ],
+        'options' => [
+            'none',
+            'color',
+            'picture',
+            'video',
+        ],
+        'subpalettes' => [
+            'none' => [],
+            'color' => [
+                'color' => 'color'
+            ],
+            'picture' => [
+                'image' => 'media',
+            ],
+            'video' => [
+                'video' => 'media',
+                'poster' => [
+                    'inputType' => 'fileTree',
+                    'eval' => ['filesOnly' => true, 'fieldType' => 'radio', 'mandatory' => true, 'tl_class' => 'clr'],
+                ],
+            ],
+        ],
+        'sql' => "blob NULL"
     ]
 ];
