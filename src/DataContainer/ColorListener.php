@@ -167,16 +167,19 @@ class ColorListener
         throw new \Exception('Invalid color value.');
     }
 
-    public function getCategoryOptions($objDca)
+    public static function getCategoryOptions($varDca)
     {
         $arrOptions = [];
 
+        $strTable = $varDca->table ?? $varDca['table'];
+        $strField = $varDca->field ?? $varDca['field'];
+
         $objColorCollection = ColorModel::findAll();
 
-        if ($objColorCollection) {
+        if ($objColorCollection && $strTable) {
             foreach ($objColorCollection as $objColor) {
                 $arrCategories = StringUtil::deserialize($objColor->category);
-                if ($objColor->isApplicable && (!$arrCategories || in_array($GLOBALS['TL_DCA'][$objDca->table]['fields'][$objDca->field]['category'], $arrCategories))) {
+                if ($objColor->isApplicable && (!$arrCategories || in_array($GLOBALS['TL_DCA'][$strTable]['fields'][$strField]['category'], $arrCategories))) {
                     $arrOptions[$objColor->id] = $objColor->title;
                 }
             }
