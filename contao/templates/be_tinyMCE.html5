@@ -240,7 +240,7 @@ if ($GLOBALS['TL_CONFIG']['useRTE']):
             link_class_list: [
                 {title: 'None', value: ''},
                 <?php Controller::loadLanguageFile('design'); ?>
-                <?php foreach (ColorModel::findApplicable('isCta') as $objColor):?>
+                <?php foreach (ColorModel::findApplicable('cta') as $objColor):?>
                 <?php foreach ($GLOBALS['design']['ctaDesign'] as $strName => $strDesign):?>
                 {title: '<?= $GLOBALS['TL_LANG']['design']['ctaDesign'][$strName] ?> | <?= $objColor->title ?>', value:'<?= str_replace("{{ctaColor}}", $objColor->variable, $strDesign) ?>'},
                 <?php endforeach;?>
