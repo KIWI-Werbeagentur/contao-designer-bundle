@@ -77,6 +77,7 @@ $GLOBALS['TL_DCA']['background']['fields'] = [
             'video' => [
                 'video' => 'media',
                 'poster' => [
+                    'label' => $GLOBALS['TL_LANG']['design']['poster'],
                     'inputType' => 'fileTree',
                     'eval' => ['filesOnly' => true, 'fieldType' => 'radio', 'mandatory' => true, 'tl_class' => 'clr'],
                 ],

@@ -45,9 +45,13 @@ $GLOBALS['TL_LANG']['design']['background'] = [
 ];
 
 $GLOBALS['TL_LANG']['design']['media'] = [
-    'Bild',
+    'Medium',
 ];
 
 $GLOBALS['TL_LANG']['design']['color'] = [
     'Farbe',
+];
+
+$GLOBALS['TL_LANG']['design']['poster'] = [
+    'Poster',
 ];
