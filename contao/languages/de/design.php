@@ -55,3 +55,11 @@ $GLOBALS['TL_LANG']['design']['color'] = [
 $GLOBALS['TL_LANG']['design']['poster'] = [
     'Poster',
 ];
+
+$GLOBALS['TL_LANG']['design']['topline'] = [
+    'Topline',
+];
+
+$GLOBALS['TL_LANG']['design']['subline'] = [
+    'Subline',
+];

@@ -33,7 +33,7 @@ $GLOBALS['TL_DCA']['cta']['fields'] = [
 
 $GLOBALS['TL_DCA']['background']['fields'] = [
     'media' => [
-        'label' => $GLOBALS['TL_LANG']['design']['media'],
+        'label' => &$GLOBALS['TL_LANG']['design']['media'],
         'inputType' => 'fileTree',
         'eval' => ['filesOnly' => true, 'fieldType' => 'radio', 'mandatory' => true, 'tl_class' => 'clr'],
         'load_callback' => [
@@ -41,7 +41,7 @@ $GLOBALS['TL_DCA']['background']['fields'] = [
         ]
     ],
     'color' => [
-        'label' => $GLOBALS['TL_LANG']['design']['color'],
+        'label' => &$GLOBALS['TL_LANG']['design']['color'],
         'inputType' => 'iconedSelect',
         'options_callback' => function () {
             return ColorListener::getCategoryOptions(['table' => 'tl_article', 'field' => 'color']);
@@ -51,8 +51,8 @@ $GLOBALS['TL_DCA']['background']['fields'] = [
         'eval' => ['tl_class' => 'clr w50', 'mandatory' => true]
     ],
     'background' => [
-        'label' => $GLOBALS['TL_LANG']['design']['background'],
-        'reference' => $GLOBALS['TL_LANG']['design']['background']['options'],
+        'label' => &$GLOBALS['TL_LANG']['design']['background'],
+        'reference' => &$GLOBALS['TL_LANG']['design']['background']['options'],
         'inputType' => 'optionalResponsiveSubpalette',
         'responsiveInputType' => 'select',
         'eval' => [
@@ -77,12 +77,36 @@ $GLOBALS['TL_DCA']['background']['fields'] = [
             'video' => [
                 'video' => 'media',
                 'poster' => [
-                    'label' => $GLOBALS['TL_LANG']['design']['poster'],
+                    'label' => &$GLOBALS['TL_LANG']['design']['poster'],
                     'inputType' => 'fileTree',
                     'eval' => ['filesOnly' => true, 'fieldType' => 'radio', 'mandatory' => true, 'tl_class' => 'clr'],
                 ],
             ],
         ],
         'sql' => "blob NULL"
+    ]
+];
+
+$GLOBALS['TL_DCA']['headline']['fields'] = [
+    'topline' => [
+        'label' => &$GLOBALS['TL_LANG']['design']['topline'],
+        'search' => true,
+        'inputType' => 'text',
+        'eval' => ['maxlength' => 255, 'tl_class' => 'clr w50'],
+        'sql' => "varchar(255) NOT NULL default ''"
+    ],
+    'headlineClass' => [
+        'label' => &$GLOBALS['TL_LANG']['design']['headlineClass'],
+        'inputType' => 'select',
+        'options' => &$GLOBALS['design']['headlineClass'],
+        'reference' => &$GLOBALS['TL_LANG']['design']['headlineClass']['options'],
+        'eval' => ['includeBlankOption' => true, 'tl_class' => 'w50'],
+        'sql' => ['name' => 'headlineClass', 'type' => 'string', 'default' => '', 'length' => 64, 'customSchemaOptions' => ['collation' => 'ascii_bin']]
+    ],
+    'subline' => [
+        'label' => &$GLOBALS['TL_LANG']['design']['subline'],
+        'inputType' => 'text',
+        'eval' => ['maxlength' => 255, 'tl_class' => 'w50'],
+        'sql' => "varchar(255) NOT NULL default ''"
     ]
 ];

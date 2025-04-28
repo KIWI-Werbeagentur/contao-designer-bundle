@@ -17,12 +17,4 @@ PaletteManipulator::create()
     ->addField('isCta', 'template_legend', PaletteManipulator::POSITION_APPEND)
     ->applyToPalette('hyperlink', 'tl_content');
 
-
-$GLOBALS['TL_DCA']['tl_content']['fields']['headlineClass'] = [
-    'label'                   => &$GLOBALS['TL_LANG']['design']['headlineClass'],
-    'inputType' => 'select',
-    'options' => &$GLOBALS['design']['headlineClass'],
-    'reference' => &$GLOBALS['TL_LANG']['design']['headlineClass']['options'],
-    'eval' => ['includeBlankOption' => true, 'tl_class' => 'w50'],
-    'sql' => ['name' => 'headlineClass', 'type' => 'string', 'default' => '', 'length' => 64, 'customSchemaOptions' => ['collation' => 'ascii_bin']]
-];
+$GLOBALS['TL_DCA']['tl_content']['fields'] += $GLOBALS['TL_DCA']['headline']['fields'];

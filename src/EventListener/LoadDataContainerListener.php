@@ -14,6 +14,9 @@ class LoadDataContainerListener
         foreach ($GLOBALS['TL_DCA'][$strTable]['palettes'] ?? [] as $strPalette => $strFields) {
             if ($strPalette !== '__selector__' && PaletteManipulatorExtended::create()->hasField($strPalette, $strTable, 'headline')) {
                 PaletteManipulator::create()
+                    ->addField(['topline','subline'], 'headline')
+                    ->applyToPalette($strPalette, $strTable);
+                PaletteManipulator::create()
                     ->addField('headlineClass', 'headline')
                     ->applyToPalette($strPalette, $strTable);
             }
