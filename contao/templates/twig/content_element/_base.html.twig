@@ -10,9 +10,15 @@
 {% set content_attributes = content_attributes|default(attrs()).addClass("#{baseClass}__content") %}
 
 {%- block inner %}
+    {% block topline %}
+        {% if data.topline ?? false %}<p class="{{baseClass}}__topline">{{ data.topline }}</p>{% endif %}
+    {% endblock topline %}
     {% if headline.text %}
         {{ block('headline_component') }}
     {% endif %}
+    {% block subline %}
+        {% if data.subline ?? false %}<p class="{{baseClass}}__subline">{{ data.subline }}</p>{% endif %}
+    {% endblock subline %}
 
     {% block content_wrapper %}
         <div {{ content_attributes }}>
