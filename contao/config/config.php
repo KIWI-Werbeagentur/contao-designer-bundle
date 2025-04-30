@@ -3,11 +3,6 @@
 use Kiwi\Contao\DesignerBundle\Widget\Backend\IconedSelectMenuWidget;
 use Kiwi\Contao\DesignerBundle\Models\ColorModel;
 
-$GLOBALS['design']['modifiers'] = [
-    'delimiter' => ' ',
-    'pattern' => '{{modifier}}'
-];
-
 $GLOBALS['design']['ctaDesign'] = [
     'btn' => 'btn btn-{{ctaColor}}',
     'btn-outline' => 'btn btn-outline-{{ctaColor}}',
@@ -26,8 +21,8 @@ $GLOBALS['design']['background'] = [
 $GLOBALS['design']['backgroundElement'] = [
     "none" => "",
     "color" => "",
-    "picture" => "<img class='{{modifiers}}' src='{{image}}'/>",
-    "video" => "<video class='{{modifiers}}' poster='{{poster}}' muted playsinline autoplay loop><source src='{{video}}'/></video>",
+    "picture" => "<img data-responsive {{modifiers}} src='{{image}}'/>",
+    "video" => "<video data-responsive {{modifiers}} poster='{{poster}}' muted playsinline autoplay loop><source src='{{video}}'/></video>",
 ];
 
 $GLOBALS['design']['color']['categories'] = [
