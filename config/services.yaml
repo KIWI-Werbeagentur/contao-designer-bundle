@@ -1,0 +1,15 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+  kiwi.contao.designer.frontend:
+    public: true
+    class: Kiwi\Contao\DesignerBundle\Service\DesignerFrontendService
+  Kiwi\Contao\DesignerBundle\EventListener\ParseWidgetListener: ~
+  Kiwi\Contao\DesignerBundle\EventListener\LoadDataContainerListener: ~
+  Kiwi\Contao\DesignerBundle\EventListener\GetContentElementListener: ~
+  Kiwi\Contao\DesignerBundle\Twig\DesignerExtension:
+    arguments:
+      - '@kiwi.contao.designer.frontend'
+    tags:
+      - 'twig.extension'

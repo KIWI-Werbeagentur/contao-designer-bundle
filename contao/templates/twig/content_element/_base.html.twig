@@ -1,0 +1,45 @@
+{% extends "@Contao/content_element/_base.html.twig" %}
+
+{% set baseClass = "content-#{type|replace({'_': '-'})}" %}
+
+{% set link_attributes = attrs().addClass(getCtaClasses(data)).mergeWith(link_attributes|default) %}
+
+{% set hl_attributes = headline.attributes|default(attrs()).addClass("#{baseClass}__headline").addClass(data.headlineClass ?? '') %}
+{% set headline = headline|default(_context)|merge({'attributes':hl_attributes}) %}
+
+{% set content_attributes = content_attributes|default(attrs()).addClass("#{baseClass}__content") %}
+
+{% set attributes = attributes|default(attrs()).setIfExists("style", getGlobalStrings(data, 'background')) %}
+
+{% if data.background %}
+    {% set attributes = attrs().addClass("#{baseClass}--background content content--background").mergeWith(attributes|default) %}
+{% endif %}
+
+{%- block inner %}
+    {% block background %}
+        {% if data.background %}
+        <div class="{{ baseClass }}__background">
+            {{ getGlobalStrings(data, 'backgroundElement', 'background')|raw }}
+        </div>
+        {% endif %}
+    {% endblock background %}
+    {% block main %}
+        <div class="{{ baseClass }}__main">
+            {% block topline %}
+                {% if data.topline ?? false %}<p class="{{ baseClass }}__topline">{{ data.topline }}</p>{% endif %}
+            {% endblock topline %}
+            {% if headline.text %}
+                {{ block('headline_component') }}
+            {% endif %}
+            {% block subline %}
+                {% if data.subline ?? false %}<p class="{{ baseClass }}__subline">{{ data.subline }}</p>{% endif %}
+            {% endblock subline %}
+
+            {% block content_wrapper %}
+                <div {{ content_attributes }}>
+                    {% block content %}{% endblock %}
+                </div>
+            {% endblock content_wrapper %}
+        </div>
+    {% endblock main %}
+{% endblock -%}
