@@ -31,61 +31,88 @@ $GLOBALS['TL_DCA']['cta']['fields'] = [
     ],
 ];
 
-$GLOBALS['TL_DCA']['background']['fields'] = [
-    'media' => [
-        'label' => &$GLOBALS['TL_LANG']['design']['media'],
-        'inputType' => 'fileTree',
-        'eval' => ['filesOnly' => true, 'fieldType' => 'radio', 'mandatory' => true, 'tl_class' => 'clr'],
-        'load_callback' => [
-            ['tl_content', 'setSingleSrcFlags']
-        ]
-    ],
-    'color' => [
-        'label' => &$GLOBALS['TL_LANG']['design']['color'],
-        'inputType' => 'iconedSelect',
-        'options_callback' => function () {
-            return ColorListener::getCategoryOptions(['table' => 'tl_article', 'field' => 'color']);
-        },
-        'icon_callback' => [ColorListener::class, 'getIcons'],
-        'category' => 'background',
-        'eval' => ['tl_class' => 'clr w50', 'mandatory' => true]
-    ],
-    'background' => [
-        'label' => &$GLOBALS['TL_LANG']['design']['background'],
-        'reference' => &$GLOBALS['TL_LANG']['design']['background']['options'],
-        'inputType' => 'optionalResponsiveSubpalette',
-        'responsiveInputType' => 'select',
-        'eval' => [
-            'mandatory' => true,
-            'tl_class' => 'clr',
-            'submitOnChange' => true,
-        ],
-        'options' => [
-            'none',
-            'color',
-            'picture',
-            'video',
-        ],
-        'subpalettes' => [
-            'none' => [],
-            'color' => [
-                'color' => 'color'
+
+$arrBackground = ($GLOBALS['responsive'] ?? false) ?
+    [
+        'background' => [
+            'label' => &$GLOBALS['TL_LANG']['design']['background'],
+            'reference' => &$GLOBALS['TL_LANG']['design']['background']['options'],
+            'inputType' => 'optionalResponsiveSubpalette',
+            'responsiveInputType' => 'select',
+            'eval' => [
+                'mandatory' => true,
+                'tl_class' => 'clr',
+                'submitOnChange' => true,
             ],
-            'picture' => [
-                'image' => 'media',
+            'options' => [
+                'none',
+                'color',
+                'picture',
+                'video',
             ],
-            'video' => [
-                'video' => 'media',
-                'poster' => [
-                    'label' => &$GLOBALS['TL_LANG']['design']['poster'],
-                    'inputType' => 'fileTree',
-                    'eval' => ['filesOnly' => true, 'fieldType' => 'radio', 'mandatory' => true, 'tl_class' => 'clr'],
+            'subpalettes' => [
+                'none' => [],
+                'color' => [
+                    'color' => 'color'
+                ],
+                'picture' => [
+                    'image' => 'media',
+                ],
+                'video' => [
+                    'video' => 'media',
+                    'poster' => [
+                        'label' => &$GLOBALS['TL_LANG']['design']['poster'],
+                        'inputType' => 'fileTree',
+                        'eval' => ['filesOnly' => true, 'fieldType' => 'radio', 'mandatory' => true, 'tl_class' => 'clr'],
+                    ],
                 ],
             ],
+            'sql' => "blob NULL"
+        ]
+    ] : [
+        'background' => [
+            'inputType' => 'select',
+            'label' => &$GLOBALS['TL_LANG']['design']['background'],
+            'reference' => &$GLOBALS['TL_LANG']['design']['background']['options'],
+            'options' => [
+                'none',
+                'color',
+                'picture',
+                'video',
+            ],
+            'eval' => ['submitOnChange' => true, 'tl_class' => 'clr w50'],
+            'sql' => "varchar(12) COLLATE ascii_bin NOT NULL default ''"
+        ]
+    ];
+
+$GLOBALS['TL_DCA']['background']['fields'] =
+    [
+        'media' => [
+            'label' => &$GLOBALS['TL_LANG']['design']['media'],
+            'inputType' => 'fileTree',
+            'eval' => ['filesOnly' => true, 'fieldType' => 'radio', 'mandatory' => true, 'tl_class' => 'clr'],
+            'load_callback' => [
+                ['tl_content', 'setSingleSrcFlags']
+            ],
         ],
-        'sql' => "blob NULL"
-    ]
-];
+        'color' => [
+            'label' => &$GLOBALS['TL_LANG']['design']['color'],
+            'inputType' => 'iconedSelect',
+            'options_callback' => function () {
+                return ColorListener::getCategoryOptions(['table' => 'tl_article', 'field' => 'color']);
+            },
+            'icon_callback' => [ColorListener::class, 'getIcons'],
+            'category' => 'background',
+            'eval' => ['tl_class' => 'clr w50', 'mandatory' => true]
+        ],
+        ...$arrBackground
+    ];
+
+if(!($GLOBALS['responsive'] ?? false)){
+    $GLOBALS['TL_DCA']['background']['fields']['media']['sql'] = "binary(16) NULL";
+    $GLOBALS['TL_DCA']['background']['fields']['color']['sql'] = "int(10) unsigned NOT NULL default 0";
+}
+
 
 $GLOBALS['TL_DCA']['headline']['fields'] = [
     'topline' => [

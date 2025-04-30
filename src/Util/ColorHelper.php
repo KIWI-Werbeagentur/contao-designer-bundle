@@ -177,10 +177,12 @@ class ColorHelper
     public static function generateScssRules(iterable $colorCollection): string
     {
         $strScss = '';
+        $strCssVars = [];
 
         foreach ($colorCollection as $objColor) {
             $color = static::getCssColorFromValue($objColor->value);
             $strScss .= '$' . $objColor->variable . ': ' . $color . ";\n";
+            $strCssVars[] = '--color-' . $objColor->variable . ': ' . $color . ";";
         }
 
         $strScss .= "\n".'$colors: ('."\n";
@@ -189,7 +191,9 @@ class ColorHelper
             $strScss .= '  "' . $objColor->variable . '": $' . $objColor->variable . ",\n";
         }
 
-        $strScss .= ");\n";
+        $strCss = implode("\n", $strCssVars);
+
+        $strScss .= ");\n\n:root{\n$strCss\n}";
 
         return $strScss;
     }

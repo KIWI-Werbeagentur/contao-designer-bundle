@@ -16,6 +16,7 @@ class DesignerExtension extends AbstractExtension
     {
         return [
             new TwigFunction('getCtaClasses', [$this->designerFrontendService, 'getCtaClasses']),
+            new TwigFunction('getGlobalStrings', [$this->designerFrontendService, 'getGlobalStrings']),
         ];
     }
 }
