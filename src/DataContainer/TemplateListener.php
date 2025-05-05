@@ -2,6 +2,7 @@
 
 namespace Kiwi\Contao\DesignerBundle\DataContainer;
 
+use Codefog\HasteBundle\Formatter;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
 use Contao\DataContainer;
 use Contao\System;
@@ -14,6 +15,9 @@ class TemplateListener
     public function renameTemplates($varValue, DataContainer $objDca)
     {
         System::loadLanguageFile('templates');
+
         $GLOBALS['TL_DCA'][$objDca->table]['fields'][$objDca->field]['reference'] = &$GLOBALS['TL_LANG']['templates'][$objDca->table];
+
+        return $varValue;
     }
 }
