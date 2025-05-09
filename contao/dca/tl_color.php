@@ -52,7 +52,7 @@ $GLOBALS['TL_DCA']['tl_color'] = [
 
     'palettes' => [
         '__selector__' => ['isApplicable'],
-        'default' => 'title,isApplicable;variable,value,contrast,highlight',
+        'default' => 'title,isApplicable;variable,value,highlight',
     ],
     'subpalettes'=>[
         'isApplicable' => 'category',
@@ -84,20 +84,6 @@ $GLOBALS['TL_DCA']['tl_color'] = [
                 [ColorListener::class, 'valueSaveCallback']
             ],
             'sql' => "varchar(255) NOT NULL default ''",
-        ],
-        'contrast' => [
-            'inputType'               => 'picker',
-            'foreignKey'              => 'tl_color.title',
-            'eval'                    => array('tl_class'=>'w50'),
-            'sql'                     => "int(10) unsigned NOT NULL default 0",
-            'relation'                => array('type'=>'hasOne', 'load'=>'lazy')
-        ],
-        'highlight' => [
-            'inputType'               => 'picker',
-            'foreignKey'              => 'tl_color.title',
-            'eval'                    => array('tl_class'=>'w50'),
-            'sql'                     => "int(10) unsigned NOT NULL default 0",
-            'relation'                => array('type'=>'hasOne', 'load'=>'lazy'),
         ],
         'isApplicable' => [
             'exclude'                 => true,

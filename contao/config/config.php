@@ -1,5 +1,7 @@
 <?php
 
+use Kiwi\Contao\DesignerBundle\Models\ColorSchemeCategoryModel;
+use Kiwi\Contao\DesignerBundle\Models\ColorSchemeModel;
 use Kiwi\Contao\DesignerBundle\Widget\Backend\IconedSelectMenuWidget;
 use Kiwi\Contao\DesignerBundle\Models\ColorModel;
 
@@ -11,7 +13,7 @@ $GLOBALS['design']['ctaDesign'] = [
 
 $GLOBALS['design']['background'] = [
     "none" => "--background{{modifier}}:none;",
-    "color" => "--background{{modifier}}:var(--color-{{color}});",
+    "color" => "--background{{modifier}}:var(--color-{{color}});--contrast{{modifier}}:var(--color-{{contrast}});",
     "picture" => "--background{{modifier}}:url('{{image}}');",
     "video" => "--background{{modifier}}:url('{{video}}');",
     "picture" => "--background{{modifier}}:none;",
@@ -20,10 +22,12 @@ $GLOBALS['design']['background'] = [
 
 $GLOBALS['design']['backgroundElement'] = [
     "none" => "",
-    "color" => "",
-    "picture" => "<img data-responsive {{modifiers}} src='{{image}}'/>",
-    "video" => "<video data-responsive {{modifiers}} poster='{{poster}}' muted playsinline autoplay loop><source src='{{video}}'/></video>",
+    "color" => "<div class='background__element background__element--color' data-responsive {{modifiers}} style='--background-color:var(--color-{{color}})'></div>",
+    "picture" => "<div class='background__element background__element--picture' data-responsive {{modifiers}}><img class='background__element__image' src='{{image}}'/></div>",
+    "video" => "<div class='background__element background__element--video' data-responsive {{modifiers}}><video class='background__element__video' poster='{{poster}}' muted playsinline autoplay loop><source src='{{video}}'/></video></div>",
 ];
+
+$GLOBALS['design']['scheme'] = "data-scheme{{modifier}}='{{scheme}}'";
 
 $GLOBALS['design']['color']['categories'] = [
     'cta',
@@ -36,4 +40,10 @@ $GLOBALS['BE_MOD']['design']['color'] = [
     'tables' => ['tl_color'],
 ];
 
+$GLOBALS['BE_MOD']['design']['color_scheme'] = [
+    'tables' => ['tl_color_scheme'],
+];
+
 $GLOBALS['TL_MODELS']['tl_color'] = ColorModel::class;
+$GLOBALS['TL_MODELS']['tl_color_scheme'] = ColorSchemeModel::class;
+$GLOBALS['TL_MODELS']['tl_color_scheme_category'] = ColorSchemeCategoryModel::class;

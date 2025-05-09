@@ -2,11 +2,13 @@
 
 namespace Kiwi\Contao\DesignerBundle\DataContainer;
 
+use Contao\FrontendTemplate;
 use Contao\StringUtil;
 use Contao\System;
 use Contao\Automator;
 use Contao\DataContainer;
 use Kiwi\Contao\DesignerBundle\Models\ColorModel;
+use Kiwi\Contao\DesignerBundle\Models\ColorSchemeModel;
 use Kiwi\Contao\DesignerBundle\Util\ColorHelper;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -179,7 +181,7 @@ class ColorListener
         if ($objColorCollection && $strTable) {
             foreach ($objColorCollection as $objColor) {
                 $arrCategories = StringUtil::deserialize($objColor->category);
-                if ($objColor->isApplicable && (!$arrCategories || in_array($GLOBALS['TL_DCA'][$strTable]['fields'][$strField]['category'], $arrCategories))) {
+                if (!($GLOBALS['TL_DCA'][$strTable]['fields'][$strField]['category'] ?? false) || $objColor->isApplicable && (!$arrCategories || in_array($GLOBALS['TL_DCA'][$strTable]['fields'][$strField]['category'], $arrCategories))) {
                     $arrOptions[$objColor->id] = $objColor->title;
                 }
             }

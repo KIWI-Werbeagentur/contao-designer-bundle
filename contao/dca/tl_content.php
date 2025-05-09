@@ -31,5 +31,5 @@ if (!$GLOBALS['responsive'] ?? true) {
 }
 
 PaletteManipulatorExtended::create()
-    ->addField('background', 'template_legend', PaletteManipulatorExtended::POSITION_APPEND)
+    ->addField(['background', 'scheme'], 'template_legend', PaletteManipulatorExtended::POSITION_APPEND)
     ->applyToPalette('element_group', 'tl_content');
