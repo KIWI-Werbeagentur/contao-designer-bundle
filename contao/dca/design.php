@@ -1,6 +1,7 @@
 <?php
 
 use Kiwi\Contao\DesignerBundle\DataContainer\ColorListener;
+use Kiwi\Contao\DesignerBundle\DataContainer\ColorSchemeListener;
 
 \Contao\System::loadLanguageFile('design');
 
@@ -41,7 +42,7 @@ $arrBackground = ($GLOBALS['responsive'] ?? false) ?
             'responsiveInputType' => 'select',
             'eval' => [
                 'mandatory' => true,
-                'tl_class' => 'clr',
+                'tl_class' => 'w50 clr',
                 'submitOnChange' => true,
             ],
             'options' => [
@@ -68,7 +69,16 @@ $arrBackground = ($GLOBALS['responsive'] ?? false) ?
                 ],
             ],
             'sql' => "blob NULL"
-        ]
+        ],
+        'scheme' => [
+            'inputType' => 'optionalResponsive',
+            'responsiveInputType' => 'select',
+            'foreignKey' => 'tl_color_scheme.title',
+            'options_callback' => [ColorSchemeListener::class, 'getSchemes'],
+            'eval' => ['tl_class' => 'w50', 'isAssociative' => true],
+            'sql' => "blob NULL",
+            'relation' => ['type' => 'hasOne', 'load' => 'lazy']
+        ],
     ] : [
         'background' => [
             'inputType' => 'select',
@@ -82,7 +92,15 @@ $arrBackground = ($GLOBALS['responsive'] ?? false) ?
             ],
             'eval' => ['submitOnChange' => true, 'tl_class' => 'clr w50'],
             'sql' => "varchar(12) COLLATE ascii_bin NOT NULL default ''"
-        ]
+        ],
+        'scheme' => [
+            'inputType' => 'select',
+            'foreignKey' => 'tl_color_scheme.title',
+            'options_callback' => [ColorSchemeListener::class, 'getSchemes'],
+            'eval' => ['tl_class' => 'w50', 'isAssociative' => true],
+            'sql' => "int(10) unsigned NOT NULL default 0",
+            'relation' => ['type' => 'hasOne', 'load' => 'lazy']
+        ],
     ];
 
 $GLOBALS['TL_DCA']['background']['fields'] =
@@ -108,7 +126,7 @@ $GLOBALS['TL_DCA']['background']['fields'] =
         ...$arrBackground
     ];
 
-if(!($GLOBALS['responsive'] ?? false)){
+if (!($GLOBALS['responsive'] ?? false)) {
     $GLOBALS['TL_DCA']['background']['fields']['media']['sql'] = "binary(16) NULL";
     $GLOBALS['TL_DCA']['background']['fields']['color']['sql'] = "int(10) unsigned NOT NULL default 0";
 }

@@ -1,0 +1,20 @@
+{% extends "@Contao/mod_article.html5" %}
+
+{% set row_classes = inner_classes|join(" ") %}
+{% set inner_classes = "" %}
+{% set backgroundClass = background ? " mod_article--background" %}
+{% set class = "#{class}#{backgroundClass}" %}
+
+{% block content %}
+    {% block background %}
+        {% if background %}
+            <div class="mod_article__background background background--article">
+                {{ getGlobalStrings(_context, 'backgroundElement', 'background')|raw }}
+            </div>
+        {% endif %}
+    {% endblock background %}
+
+    <div class="mod_article__main main {{ row_classes }}">
+        {{ parent() }}
+    </div>
+{% endblock %}

@@ -9,6 +9,7 @@ use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
 use Contao\ManagerPlugin\Config\ConfigPluginInterface;
 use Kiwi\Contao\CmxBundle\KiwiCmxBundle;
 use Kiwi\Contao\DesignerBundle\KiwiDesignerBundle;
+use Kiwi\Contao\ResponsiveBaseBundle\KiwiResponsiveBaseBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
 
 class Plugin implements BundlePluginInterface, ConfigPluginInterface
@@ -22,7 +23,7 @@ class Plugin implements BundlePluginInterface, ConfigPluginInterface
             BundleConfig::create(KiwiDesignerBundle::class)
                 ->setLoadAfter([
                     ContaoCoreBundle::class,
-                    KiwiCmxBundle::class,
+                    KiwiCmxBundle::class
                 ]),
         ];
     }

@@ -63,3 +63,5 @@ $GLOBALS['TL_LANG']['design']['topline'] = [
 $GLOBALS['TL_LANG']['design']['subline'] = [
     'Subline',
 ];
+
+$GLOBALS['TL_LANG']['design']['scheme']['inherit'] = '- Zurücksetzen -';
