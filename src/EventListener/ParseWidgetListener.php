@@ -10,7 +10,10 @@ class ParseWidgetListener
 {
     public function __invoke($strBuffer, $objWidget)
     {
-        $objWidget->inputClasses .= System::getContainer()->get('kiwi.contao.designer.frontend')->getCtaClasses($objWidget);
+        try {
+            $objWidget->inputClasses .= System::getContainer()->get('kiwi.contao.designer.frontend')->getCtaClasses($objWidget);
+        }
+        catch(\Exception $e){}
         return $objWidget->inherit();
     }
 }
