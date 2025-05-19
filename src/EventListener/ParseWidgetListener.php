@@ -10,10 +10,15 @@ class ParseWidgetListener
 {
     public function __invoke($strBuffer, $objWidget)
     {
-        try {
-            $objWidget->inputClasses .= System::getContainer()->get('kiwi.contao.designer.frontend')->getCtaClasses($objWidget);
+        $request = System::getContainer()->get('request_stack')->getCurrentRequest();
+        if(!System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest($request)) {
+            try {
+                $objWidget->inputClasses .= System::getContainer()->get('kiwi.contao.designer.frontend')->getCtaClasses($objWidget);
+            } catch (\Exception $e) {
+            }
+            $objWidget->strName = str_replace("[]", "", $objWidget->strName);
+            return $objWidget->inherit();
         }
-        catch(\Exception $e){}
-        return $objWidget->inherit();
+        return $strBuffer;
     }
 }
