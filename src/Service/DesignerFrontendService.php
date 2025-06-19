@@ -2,8 +2,10 @@
 
 namespace Kiwi\Contao\DesignerBundle\Service;
 
+use Contao\Database;
 use Contao\FilesModel;
 use Contao\LayoutModel;
+use Contao\StringUtil;
 use Contao\System;
 use Contao\ThemeModel;
 use Kiwi\Contao\DesignerBundle\Models\ColorModel;
@@ -43,6 +45,15 @@ class DesignerFrontendService
             case 'audio':
                 $strValue = FilesModel::findByPk($strValue)->path;
                 break;
+            case 'imageOverwrite':
+                $strTable = $this->arrData['overwriteTable'] ?? "";
+                $strField = $this->arrData['overwriteField'] ?? "";
+
+                if($strTable && $strField) {
+                    $strUuid = Database::getInstance()->prepare("SELECT {$strField} FROM {$strTable}")->execute()->fetchAssoc()[$strField];
+                    $strValue = FilesModel::findByPk($strUuid)->path;
+                }
+                break;
         }
 
         if (isset($GLOBALS['TL_HOOKS']['resolveDesignValues']) && \is_array($GLOBALS['TL_HOOKS']['resolveDesignValues']))
@@ -79,6 +90,17 @@ class DesignerFrontendService
         return $this->getClasses($arrData, 'ctaDesign');
     }
 
+    public function hasBackground($strBackground)
+    {
+        $arrBackgrounds = StringUtil::deserialize($strBackground);
+
+        foreach($arrBackgrounds as $arrBackground){
+            if($arrBackground['background'] != 'none') return true;
+        }
+
+        return false;
+    }
+
     public function getGlobalStrings($arrData, $strMapping, $strField = "")
     {
         if (!$strField) $strField = $strMapping;
@@ -92,7 +114,7 @@ class DesignerFrontendService
     public function getThemeAndLayout(){
         $requestStack = System::getContainer()->get('request_stack');
         $currentRequest = $requestStack->getCurrentRequest();
-        $objPage = System::getContainer()->get('contao.routing.page_finder')->findRootPageForRequest($currentRequest);
+        $objPage = $currentRequest->attributes->get('pageModel');
 
         $objLayout = LayoutModel::findByPk($objPage->layout);
         $objTheme = ThemeModel::findByPk($objLayout->pid);

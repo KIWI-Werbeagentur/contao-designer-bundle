@@ -8,9 +8,15 @@
 {% block content %}
     {% block background %}
         {% if background %}
-            <div class="mod_article__background background background--article">
-                {{ getGlobalStrings(_context, 'backgroundElement', 'background')|raw }}
-            </div>
+            {% if hasBackground(background) %}
+                <div class="mod_article__background background background--article">
+                    {% if backgroundOverwrite %}
+                        {{ getClasses(_context, 'backgroundOverwrite', 'backgroundOverwrite')|raw }}
+                    {% else %}
+                        {{ getGlobalStrings(_context, 'backgroundElement', 'background')|raw }}
+                    {% endif %}
+                </div>
+            {% endif %}
         {% endif %}
     {% endblock background %}
 

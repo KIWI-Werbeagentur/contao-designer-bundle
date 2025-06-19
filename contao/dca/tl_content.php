@@ -30,6 +30,5 @@ if (!$GLOBALS['responsive'] ?? true) {
     $GLOBALS['TL_DCA']['tl_content']['subpalettes']['background_video'] = "media";
 }
 
-PaletteManipulatorExtended::create()
-    ->addField(['background', 'scheme'], 'template_legend', PaletteManipulatorExtended::POSITION_APPEND)
-    ->applyToPalette('element_group', 'tl_content');
+$GLOBALS['TL_DCA']['tl_content']['palettes']['__selector__'][] = 'backgroundOverwrite';
+$GLOBALS['TL_DCA']['tl_content']['subpalettes']['backgroundOverwrite'] = "overwriteTable,overwriteField";

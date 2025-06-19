@@ -21,5 +21,11 @@ class LoadDataContainerListener
                     ->applyToPalette($strPalette, $strTable);
             }
         }
+
+        if ($strTable == 'tl_content') {
+            PaletteManipulatorExtended::create()
+                ->addField(['backgroundOverwrite', 'background', 'scheme'], 'template_legend', PaletteManipulatorExtended::POSITION_APPEND)
+                ->applyToPalettes($GLOBALS['design']['tl_content']['background'], 'tl_content');
+        }
     }
 }

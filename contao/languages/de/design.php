@@ -1,5 +1,9 @@
 <?php
 
+$GLOBALS["TL_LANG"]["design"]["scheme"] = [
+    "Farbschema"
+];
+
 $GLOBALS['TL_LANG']['design']['isCta'] = [
     'Als CTA darstellen',
 ];
@@ -36,7 +40,7 @@ $GLOBALS['TL_LANG']['design']['headlineClass'] = [
 
 $GLOBALS['TL_LANG']['design']['background'] = [
     'Hintergrund',
-    'options'=>[
+    'options' => [
         'picture' => 'Bild',
         'video' => 'Video',
         'color' => 'Farbe',
@@ -62,6 +66,18 @@ $GLOBALS['TL_LANG']['design']['topline'] = [
 
 $GLOBALS['TL_LANG']['design']['subline'] = [
     'Subline',
+];
+
+$GLOBALS['TL_LANG']['design']['backgroundOverwrite'] = [
+    'Hintergrund dynamisch überschreiben',
+];
+
+$GLOBALS['TL_LANG']['design']['overwriteTable'] = [
+    'Tabelle',
+];
+
+$GLOBALS['TL_LANG']['design']['overwriteField'] = [
+    'Feld',
 ];
 
 $GLOBALS['TL_LANG']['design']['scheme']['inherit'] = '- Zurücksetzen -';

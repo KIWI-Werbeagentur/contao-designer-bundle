@@ -19,22 +19,30 @@
 {%- block inner %}
     {% block background %}
         {% if data.background %}
-        <div class="content__background background background--content">
-            {{ getGlobalStrings(data, 'backgroundElement', 'background')|raw }}
-        </div>
+            {% if hasBackground(data.background) %}
+                <div class="content__background background background--content">
+                    {% if data.backgroundOverwrite %}
+                        {{ getClasses(data, 'backgroundOverwrite', 'backgroundOverwrite')|raw }}
+                    {% else %}
+                        {{ getGlobalStrings(data, 'backgroundElement', 'background')|raw }}
+                    {% endif %}
+                </div>
+            {% endif %}
         {% endif %}
     {% endblock background %}
     {% block main %}
-        <div class="content__main main">
-            {% if headline.text %}
-                {{ block('headline_component') }}
-            {% endif %}
+        {% if block('content')|spaceless is not empty and block('headline_component')|spaceless is not empty %}
+            <div class="content__main main {{ main_class ?? '' }}">
+                {% if headline.text %}
+                    {{ block('headline_component') }}
+                {% endif %}
 
-            {% block content_wrapper %}
-                <div {{ content_attributes }}>
-                    {% block content %}{% endblock %}
-                </div>
-            {% endblock content_wrapper %}
-        </div>
+                {% block content_wrapper %}
+                    <div {{ content_attributes }}>
+                        {% block content %}{% endblock %}
+                    </div>
+                {% endblock content_wrapper %}
+            </div>
+        {% endif %}
     {% endblock main %}
 {% endblock -%}

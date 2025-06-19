@@ -71,6 +71,7 @@ $arrBackground = ($GLOBALS['responsive'] ?? false) ?
             'sql' => "blob NULL"
         ],
         'scheme' => [
+            'label' => &$GLOBALS['TL_LANG']['design']['scheme'],
             'inputType' => 'optionalResponsive',
             'responsiveInputType' => 'select',
             'foreignKey' => 'tl_color_scheme.title',
@@ -122,6 +123,43 @@ $GLOBALS['TL_DCA']['background']['fields'] =
             'icon_callback' => [ColorListener::class, 'getIcons'],
             'category' => 'background',
             'eval' => ['tl_class' => 'clr w50', 'mandatory' => true]
+        ],
+        'backgroundOverwrite' => [
+            'label' => &$GLOBALS['TL_LANG']['design']['backgroundOverwrite'],
+            'inputType' => 'checkbox',
+            'eval' => ['submitOnChange' => true, 'tl_class' => 'clr m12'],
+            'sql' => "char(1) NOT NULL default ''",
+        ],
+        'overwriteTable' => [
+            'label' => &$GLOBALS['TL_LANG']['design']['overwriteTable'],
+            'inputType' => 'select',
+            'options_callback' => function () {
+                $strDb = \Contao\System::getContainer()->get('doctrine.dbal.default_connection')->getDatabase();
+                $arrTables = \Contao\Database::getInstance()->prepare("SELECT DISTINCT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = ?")->execute($strDb)->fetchEach('TABLE_NAME');
+                return $arrTables;
+            },
+            'eval' => ['mandatory' => true, 'includeBlankOption' => true, 'tl_class' => 'w50', 'submitOnChange' => true],
+            'sql' => ['type' => 'string', 'default' => '', 'length' => 64]
+        ],
+        'overwriteField' => [
+            'label' => &$GLOBALS['TL_LANG']['design']['overwriteField'],
+            'inputType' => 'select',
+            'options_callback' => function ($dc) {
+                if (!$dc->activeRecord->overwriteTable) return [];
+                $strDb = \Contao\System::getContainer()->get('doctrine.dbal.default_connection')->getDatabase();
+                $arrFields = \Contao\Database::getInstance()->prepare("SELECT DISTINCT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = ? AND TABLE_SCHEMA = ?")->execute($dc->activeRecord->overwriteTable, $strDb)->fetchEach('COLUMN_NAME');
+                \Contao\Controller::loadDataContainer($dc->activeRecord->overwriteTable);
+
+                $arrOptions = [];
+                foreach ($arrFields as $arrField) {
+                    if (($GLOBALS['TL_DCA'][$dc->activeRecord->overwriteTable]['fields'][$arrField]['inputType'] ?? '') == 'fileTree') {
+                        $arrOptions[$arrField] = $arrField;
+                    }
+                }
+                return $arrOptions;
+            },
+            'eval' => ['includeBlankOption' => true, 'tl_class' => 'w50', 'submitOnChange' => true],
+            'sql' => ['type' => 'string', 'default' => '', 'length' => 64]
         ],
         ...$arrBackground
     ];

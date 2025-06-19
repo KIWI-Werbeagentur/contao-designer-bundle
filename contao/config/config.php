@@ -26,6 +26,7 @@ $GLOBALS['design']['backgroundElement'] = [
     "picture" => "<div class='background__element background__element--picture' data-responsive {{modifiers}}><img class='background__element__image' src='{{image}}'/></div>",
     "video" => "<div class='background__element background__element--video' data-responsive {{modifiers}}><video class='background__element__video' poster='{{poster}}' muted playsinline autoplay loop><source src='{{video}}'/></video></div>",
 ];
+$GLOBALS['design']['backgroundOverwrite'] = [1=>"<div class='background__element background__element--picture' data-responsive {{modifiersAll}}><img class='background__element__image' src='{{imageOverwrite}}'/></div>"];
 
 $GLOBALS['design']['scheme'] = "data-scheme{{modifier}}='{{scheme}}'";
 
@@ -33,6 +34,8 @@ $GLOBALS['design']['color']['categories'] = [
     'cta',
     'background'
 ];
+
+$GLOBALS['design']['tl_content']['background'] = ['element_group'];
 
 $GLOBALS['design']['headlineClass'] = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'display-1', 'display-2', 'display-3', 'display-4', 'display-5', 'display-6'];
 
