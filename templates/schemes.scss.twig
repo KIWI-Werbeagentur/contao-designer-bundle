@@ -9,7 +9,7 @@ $schemes: (
   {%  for scheme in schemes %}
         "{{scheme.alias}}": (
         {% for prop in props  %}
-                "{{ prop }}": {% if scheme[prop] ?? 0 %}{{ '#{$' }}{{ getColorVar(scheme[prop]) }}{{ '}' }}{% else %} inherit {% endif %},
+                "{{ prop }}": {% if scheme[prop] ?? 0 %}{% if scheme[prop ~ 'Brightness'] %}{{ 'change-color(#{$' }}{{ getColorVar(scheme[prop]) }}{{ '}, $lightness:' }}{{ scheme[prop ~ 'Brightness'] }}{{ '%)' }}{% else %}{{ '#{$' }}{{ getColorVar(scheme[prop]) }}{{ '}' }}{% endif %}{% else %} inherit {% endif %},
         {% endfor %}
         ),
   {% endfor %}

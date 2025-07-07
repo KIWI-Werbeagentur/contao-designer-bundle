@@ -2,7 +2,7 @@
 
 {% set row_classes = inner_classes|join(" ") %}
 {% set inner_classes = "" %}
-{% set backgroundClass = background ? " mod_article--background" %}
+{% set backgroundClass = background and hasBackground(background) ? " mod_article--background" %}
 {% set class = "#{class}#{backgroundClass}" %}
 
 {% block content %}

@@ -84,7 +84,7 @@ $GLOBALS['TL_DCA']['tl_color_scheme'] = [
     ],
 ];
 
-
+$arrFields = [];
 foreach ($GLOBALS['scheme']['fields'] ?? [] as $strField) {
     $GLOBALS['TL_DCA']['tl_color_scheme']['fields'][$strField] = [
         'label' => &$GLOBALS['TL_LANG']['design']['scheme'][$strField],
@@ -94,8 +94,25 @@ foreach ($GLOBALS['scheme']['fields'] ?? [] as $strField) {
         'eval' => ['tl_class' => 'w25', 'mandatory' => true],
         'sql' => "varchar(35) NOT NULL default ''"
     ];
+
+    $GLOBALS['TL_DCA']['tl_color_scheme']['fields'][$strField . "Brightness"] = [
+        'label' => "",
+        'inputType' => 'select',
+        'options_callback' => function () {
+            $arrOptions = [];
+            for ($i = 0; $i <= 20; $i++) {
+                $arrOptions[] = $i * 5;
+            }
+            return $arrOptions;
+        },
+        'eval' => ['tl_class' => 'w25', 'includeBlankOption' => true],
+        'sql' => "varchar(35) NOT NULL default ''"
+    ];
+
+    $arrFields[] = $strField;
+    $arrFields[] = $strField . "Brightness";
 }
 
 PaletteManipulatorExtended::create()
-    ->addField($GLOBALS['scheme']['fields'] ?? [], 'colors_legend')
+    ->addField($arrFields, 'colors_legend')
     ->applyToPalette('default', 'tl_color_scheme');
