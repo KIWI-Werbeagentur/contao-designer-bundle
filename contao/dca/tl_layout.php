@@ -17,3 +17,5 @@ PaletteManipulatorExtended::create()
 
 $GLOBALS['TL_DCA']['tl_layout']['config']['onsubmit_callback'][] =  [ColorSchemeListener::class, 'generateSchemesScss'];
 $GLOBALS['TL_DCA']['tl_layout']['config']['ondelete_callback'][] =  [ColorSchemeListener::class, 'generateSchemesScss'];
+
+$GLOBALS['TL_DCA']['tl_layout']['fields']['framework']['options'][] = 'color_styles';

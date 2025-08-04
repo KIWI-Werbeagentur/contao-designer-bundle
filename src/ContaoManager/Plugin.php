@@ -7,6 +7,7 @@ use Contao\ManagerPlugin\Bundle\BundlePluginInterface;
 use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
 use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
 use Contao\ManagerPlugin\Config\ConfigPluginInterface;
+use Kiwi\Contao\BootstrapBundle\KiwiBootstrapBundle;
 use Kiwi\Contao\CmxBundle\KiwiCmxBundle;
 use Kiwi\Contao\DesignerBundle\KiwiDesignerBundle;
 use Kiwi\Contao\ResponsiveBaseBundle\KiwiResponsiveBaseBundle;

@@ -6,6 +6,8 @@ services:
     public: true
     class: Kiwi\Contao\DesignerBundle\Service\DesignerFrontendService
   Kiwi\Contao\DesignerBundle\EventListener\ParseWidgetListener: ~
+  Kiwi\Contao\DesignerBundle\EventListener\GeneratePageListener: ~
+  Kiwi\Contao\DesignerBundle\EventListener\AlterBootstrapImports: ~
   Kiwi\Contao\DesignerBundle\EventListener\LoadDataContainerListener: ~
   Kiwi\Contao\DesignerBundle\EventListener\GetContentElementListener: ~
   Kiwi\Contao\DesignerBundle\Twig\DesignerExtension:

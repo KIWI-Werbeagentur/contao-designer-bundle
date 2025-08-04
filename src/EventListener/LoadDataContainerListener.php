@@ -4,6 +4,9 @@ namespace Kiwi\Contao\DesignerBundle\EventListener;
 
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsHook;
+use Contao\Database;
+use Contao\StringUtil;
+use Contao\System;
 use Kiwi\Contao\CmxBundle\DataContainer\PaletteManipulatorExtended;
 
 #[AsHook('loadDataContainer')]
@@ -26,6 +29,12 @@ class LoadDataContainerListener
             PaletteManipulatorExtended::create()
                 ->addField(['backgroundOverwrite', 'background', 'scheme'], 'template_legend', PaletteManipulatorExtended::POSITION_APPEND)
                 ->applyToPalettes($GLOBALS['design']['tl_content']['background'], 'tl_content');
+        }
+
+        if($strTable == 'tl_layout') {
+            $GLOBALS['TL_DCA']['tl_layout']['fields']['framework']['default'] = array_unique(array_merge(["color_styles"],$GLOBALS['TL_DCA']['tl_layout']['fields']['framework']['default'] ?? []));
+            $strDefaults = serialize($GLOBALS['TL_DCA']['tl_layout']['fields']['framework']['default']);
+            $GLOBALS['TL_DCA']['tl_layout']['fields']['framework']['sql'] = "varchar(255) NOT NULL default '$strDefaults'";
         }
     }
 }
