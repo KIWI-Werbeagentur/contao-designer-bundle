@@ -37,7 +37,7 @@ class ColorSchemeListener
     #[AsCallback(table: 'tl_content', target: 'fields.scheme.options')]
     public function getSchemes()
     {
-        return ["inherit" => &$GLOBALS['TL_LANG']['design']['scheme']['inherit']] + ColorSchemeModel::findAll()->fetchEach('title');
+        return ["inherit" => &$GLOBALS['TL_LANG']['design']['scheme']['inherit']] + (ColorSchemeModel::findAll()?->fetchEach('title') ?? []);
     }
 
     public function generateSchemesScss(?DataContainer $objDca = null, ?int $undoId = null)
@@ -59,8 +59,8 @@ class ColorSchemeListener
 
         $objTemplate = System::getContainer()->get('twig')->render('@KiwiDesigner/schemes.scss.twig', [
             'layoutSchemes' => $arrLayoutSchemes,
-            'schemes' => ColorSchemeModel::findAll()->fetchAll(),
-            'props' => $GLOBALS['scheme']['fields']
+            'schemes' => ColorSchemeModel::findAll()?->fetchAll() ?? [],
+            'props' => $GLOBALS['scheme']['fields'] ?? [],
         ]);
 
         if (isset($GLOBALS['TL_HOOKS']['alterSchemesScss']) && \is_array($GLOBALS['TL_HOOKS']['alterSchemesScss']))
