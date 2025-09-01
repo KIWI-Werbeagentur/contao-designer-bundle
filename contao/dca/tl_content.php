@@ -31,4 +31,4 @@ if (!$GLOBALS['responsive'] ?? true) {
 }
 
 $GLOBALS['TL_DCA']['tl_content']['palettes']['__selector__'][] = 'backgroundOverwrite';
-$GLOBALS['TL_DCA']['tl_content']['subpalettes']['backgroundOverwrite'] = "overwriteTable,overwriteField";
+$GLOBALS['TL_DCA']['tl_content']['subpalettes']['backgroundOverwrite'] = "overwriteTable,overwriteField,overwriteParameter";

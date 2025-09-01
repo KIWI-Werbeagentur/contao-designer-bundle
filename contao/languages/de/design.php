@@ -80,4 +80,8 @@ $GLOBALS['TL_LANG']['design']['overwriteField'] = [
     'Feld',
 ];
 
+$GLOBALS['TL_LANG']['design']['overwriteParameter'] = [
+    'Parameter',
+];
+
 $GLOBALS['TL_LANG']['design']['scheme']['inherit'] = '- Zurücksetzen -';

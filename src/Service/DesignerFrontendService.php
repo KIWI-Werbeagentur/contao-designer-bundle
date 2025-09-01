@@ -4,6 +4,7 @@ namespace Kiwi\Contao\DesignerBundle\Service;
 
 use Contao\Database;
 use Contao\FilesModel;
+use Contao\Input;
 use Contao\LayoutModel;
 use Contao\StringUtil;
 use Contao\System;
@@ -50,7 +51,7 @@ class DesignerFrontendService
                 $strField = $this->arrData['overwriteField'] ?? "";
 
                 if($strTable && $strField) {
-                    $strUuid = Database::getInstance()->prepare("SELECT {$strField} FROM {$strTable}")->execute()->fetchAssoc()[$strField];
+                    $strUuid = Database::getInstance()->prepare("SELECT {$strField} FROM {$strTable} WHERE alias=?")->execute(Input::get($this->arrData['overwriteParameter'] ?: 'auto_item'))->fetchAssoc()[$strField];
                     $strValue = FilesModel::findByPk($strUuid)->path;
                 }
                 break;

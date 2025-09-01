@@ -161,6 +161,12 @@ $GLOBALS['TL_DCA']['background']['fields'] =
             'eval' => ['includeBlankOption' => true, 'tl_class' => 'w50', 'submitOnChange' => true],
             'sql' => ['type' => 'string', 'default' => '', 'length' => 64]
         ],
+        'overwriteParameter' => [
+            'label' => &$GLOBALS['TL_LANG']['design']['overwriteParameter'],
+            'inputType' => 'text',
+            'eval' => ['tl_class' => 'w50'],
+            'sql' => ['type' => 'string', 'default' => '', 'length' => 64]
+        ],
         ...$arrBackground
     ];
 
