@@ -1,8 +1,9 @@
 {
     "name": "kiwi/contao-designer",
     "type": "contao-bundle",
-    "description": "",
-    "license": "proprietary",
+    "keywords": ["contao", "design", "colors", "colorschemes", "linkdesigns", "buttons", "backgrounds", "topline", "subline"],
+    "description": "This bundle enables you to manage design settings and their assignment to contents within Contao CMS (e.g. colors and colorschemes, backgrounds and linkdesigns).",
+    "license": "LGPL-3.0-or-later",
     "authors": [
         {
             "name": "Katrin Zimmermann",
@@ -16,7 +17,7 @@
     "require": {
         "php": "^8.3",
         "contao/core-bundle": "~5.3.18",
-        "kiwi/contao-cmx": "^0.1"
+        "kiwi/contao-cmx": "^1.0"
     },
     "require-dev": {
         "contao/manager-plugin": "^2.0"
