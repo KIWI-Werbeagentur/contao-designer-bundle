@@ -22,7 +22,7 @@ $schemes: (
 }
 
 {% for layout, scheme in layoutSchemes %}
-:root{
+.body--{{ layout }}{
   @include scheme({{ scheme }});
 }
 {% endfor %}
