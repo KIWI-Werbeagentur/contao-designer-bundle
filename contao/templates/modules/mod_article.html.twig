@@ -4,6 +4,7 @@
 {% set inner_classes = "" %}
 {% set backgroundClass = background and hasBackground(background) ? " mod_article--background" %}
 {% set class = "#{class}#{backgroundClass}" %}
+{% set attributes = attributes|default(attrs()).mergeWith(getGlobalStrings(data, 'scheme')) %}
 
 {% block content %}
     {% block background %}
@@ -20,7 +21,7 @@
         {% endif %}
     {% endblock background %}
 
-    <div class="mod_article__main main {{ row_classes }}">
+    <div class="mod_article__main main {{ row_classes }}" {{ getGlobalStrings(_context, 'scheme') }}>
         {{ parent() }}
     </div>
 {% endblock %}
