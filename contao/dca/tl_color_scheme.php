@@ -85,6 +85,7 @@ $GLOBALS['TL_DCA']['tl_color_scheme'] = [
 ];
 
 $arrFields = [];
+\Contao\System::loadLanguageFile('design');
 foreach ($GLOBALS['scheme']['fields'] ?? [] as $strField) {
     $GLOBALS['TL_DCA']['tl_color_scheme']['fields'][$strField] = [
         'label' => &$GLOBALS['TL_LANG']['design']['scheme'][$strField],

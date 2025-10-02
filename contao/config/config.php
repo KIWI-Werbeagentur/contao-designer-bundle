@@ -28,7 +28,7 @@ $GLOBALS['design']['backgroundElement'] = [
 ];
 $GLOBALS['design']['backgroundOverwrite'] = [1=>"<div class='background__element background__element--picture' data-responsive {{modifiersAll}}><img class='background__element__image' src='{{imageOverwrite}}'/></div>"];
 
-$GLOBALS['design']['scheme'] = "data-scheme{{modifier}}='{{scheme}}'";
+$GLOBALS['design']['scheme'] = "data-scheme{{modifier}}={{scheme}}";
 
 $GLOBALS['design']['color']['categories'] = [
     'cta',
