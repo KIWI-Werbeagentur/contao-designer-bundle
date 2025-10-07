@@ -4,7 +4,7 @@
 {% set inner_classes = "" %}
 {% set backgroundClass = background and hasBackground(background) ? " mod_article--background" %}
 {% set class = "#{class}#{backgroundClass}" %}
-{% set attributes = attributes|default(attrs()).mergeWith(getGlobalStrings(data, 'scheme')) %}
+{% set attributes = attributes|default(attrs()).mergeWith(getGlobalStrings(_context, 'scheme')) %}
 
 {% block content %}
     {% block background %}
