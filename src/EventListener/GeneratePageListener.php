@@ -21,6 +21,9 @@ class GeneratePageListener
                     //In normales CSS?
                     $GLOBALS['TL_FRAMEWORK_CSS'][] = '/bundles/kiwidesigner/colors.scss';
                     break;
+                case 'background_styles':
+                    $GLOBALS['TL_FRAMEWORK_CSS'][] = '/bundles/kiwidesigner/background.scss';
+                    break;
                 default:
                     break;
             }
