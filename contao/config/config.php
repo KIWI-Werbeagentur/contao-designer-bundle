@@ -23,7 +23,7 @@ $GLOBALS['design']['background'] = [
 $GLOBALS['design']['backgroundElement'] = [
     "none" => "",
     "color" => "<div class='background__element background__element--color' data-responsive {{modifiers}} style='--background-color:var(--color-{{color}})'></div>",
-    "picture" => "<div class='background__element background__element--picture' data-responsive {{modifiers}}><img class='background__element__image' src='{{image}}'/></div>",
+    "picture" => "<div class='background__element background__element--picture' data-responsive {{modifiers}}>{{figure}}</div>",
     "video" => "<div class='background__element background__element--video' data-responsive {{modifiers}}><video class='background__element__video' poster='{{poster}}' muted playsinline autoplay loop><source src='{{video}}'/></video></div>",
 ];
 $GLOBALS['design']['backgroundOverwrite'] = [1=>"<div class='background__element background__element--picture' data-responsive {{modifiersAll}}><img class='background__element__image' src='{{imageOverwrite}}'/></div>"];

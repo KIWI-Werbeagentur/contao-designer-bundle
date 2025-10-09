@@ -58,6 +58,7 @@ $arrBackground = ($GLOBALS['responsive'] ?? false) ?
                 ],
                 'picture' => [
                     'image' => 'media',
+                    'size'  => 'size'
                 ],
                 'video' => [
                     'video' => 'media',
@@ -114,6 +115,17 @@ $GLOBALS['TL_DCA']['background']['fields'] =
                 ['tl_content', 'setSingleSrcFlags']
             ],
         ],
+        'size' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['MSC']['imgSize'],
+            'inputType'               => 'imageSize',
+            'reference'               => &$GLOBALS['TL_LANG']['MSC'],
+            'eval'                    => array('rgxp'=>'natural', 'includeBlankOption'=>true, 'nospace'=>true, 'helpwizard'=>true, 'tl_class'=>'w50 clr'),
+            'options_callback' => static function () {
+                return \Contao\System::getContainer()->get('contao.image.sizes')->getOptionsForUser(\Contao\BackendUser::getInstance());
+            },
+            'sql'                     => "varchar(128) COLLATE ascii_bin NOT NULL default ''"
+        ),
         'color' => [
             'label' => &$GLOBALS['TL_LANG']['design']['color'],
             'inputType' => 'iconedSelect',

@@ -38,6 +38,20 @@ class DesignerFrontendService
             case 'scheme':
                 $strValue = ColorSchemeModel::findByPk($this->arrData)->alias ?? 'inherit';
                 break;
+            case 'figure':
+                if ($this->arrData['size'] ?? false) {
+                    $objFigureBuilder = System::getContainer()->get('contao.image.studio')->createFigureBuilder();
+                    $objFigureBuilder
+                        ->fromUuid($this->arrData['image'])
+                        ->setSize($this->arrData['size']);
+                    $figure = $objFigureBuilder->build();
+                    $template = new \Contao\FrontendTemplate('image');
+                    $figure->applyLegacyTemplateData($template);
+                    $strValue = $template->parse();
+                } else {
+                    $strValue = FilesModel::findByPk($this->arrData['image'])->path;
+                }
+                break;
             case 'poster':
             case 'image':
             case 'file':
@@ -50,17 +64,15 @@ class DesignerFrontendService
                 $strTable = $this->arrData['overwriteTable'] ?? "";
                 $strField = $this->arrData['overwriteField'] ?? "";
 
-                if($strTable && $strField) {
+                if ($strTable && $strField) {
                     $strUuid = Database::getInstance()->prepare("SELECT {$strField} FROM {$strTable} WHERE alias=?")->execute(Input::get($this->arrData['overwriteParameter'] ?: 'auto_item'))->fetchAssoc()[$strField];
                     $strValue = FilesModel::findByPk($strUuid)->path;
                 }
                 break;
         }
 
-        if (isset($GLOBALS['TL_HOOKS']['resolveDesignValues']) && \is_array($GLOBALS['TL_HOOKS']['resolveDesignValues']))
-        {
-            foreach ($GLOBALS['TL_HOOKS']['resolveDesignValues'] as $callback)
-            {
+        if (isset($GLOBALS['TL_HOOKS']['resolveDesignValues']) && \is_array($GLOBALS['TL_HOOKS']['resolveDesignValues'])) {
+            foreach ($GLOBALS['TL_HOOKS']['resolveDesignValues'] as $callback) {
                 System::importStatic($callback[0])->{$callback[1]}($strName, $strValue, $this->arrData);
             }
         }
@@ -95,8 +107,8 @@ class DesignerFrontendService
     {
         $arrBackgrounds = StringUtil::deserialize($strBackground);
 
-        foreach($arrBackgrounds as $arrBackground){
-            if($arrBackground['background'] != 'none') return true;
+        foreach ($arrBackgrounds as $arrBackground) {
+            if ($arrBackground['background'] != 'none') return true;
         }
 
         return false;
@@ -108,11 +120,13 @@ class DesignerFrontendService
         return $this->getClasses($arrData, $strMapping, $strField);
     }
 
-    public function getColorVar($id){
+    public function getColorVar($id)
+    {
         return ColorModel::findByPk($id)->variable ?? 'inherit';
     }
 
-    public function getThemeAndLayout(){
+    public function getThemeAndLayout()
+    {
         $requestStack = System::getContainer()->get('request_stack');
         $currentRequest = $requestStack->getCurrentRequest();
         $objPage = $currentRequest->attributes->get('pageModel');
