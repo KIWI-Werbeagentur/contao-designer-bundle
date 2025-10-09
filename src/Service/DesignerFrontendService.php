@@ -39,18 +39,14 @@ class DesignerFrontendService
                 $strValue = ColorSchemeModel::findByPk($this->arrData)->alias ?? 'inherit';
                 break;
             case 'figure':
-                if ($this->arrData['size'] ?? false) {
-                    $objFigureBuilder = System::getContainer()->get('contao.image.studio')->createFigureBuilder();
-                    $objFigureBuilder
-                        ->fromUuid($this->arrData['image'])
-                        ->setSize($this->arrData['size']);
-                    $figure = $objFigureBuilder->build();
-                    $template = new \Contao\FrontendTemplate('image');
-                    $figure->applyLegacyTemplateData($template);
-                    $strValue = $template->parse();
-                } else {
-                    $strValue = FilesModel::findByPk($this->arrData['image'])->path;
-                }
+                $objFigureBuilder = System::getContainer()->get('contao.image.studio')->createFigureBuilder();
+                $objFigureBuilder
+                    ->fromUuid($this->arrData['image'])
+                    ->setSize($this->arrData['size'] ?? null);
+                $figure = $objFigureBuilder->build();
+                $template = new \Contao\FrontendTemplate('image');
+                $figure->applyLegacyTemplateData($template);
+                $strValue = $template->parse();
                 break;
             case 'poster':
             case 'image':
