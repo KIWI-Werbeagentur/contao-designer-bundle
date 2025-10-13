@@ -16,7 +16,7 @@
     ],
     "require": {
         "php": "^8.3",
-        "contao/core-bundle": "~5.3.18",
+        "contao/core-bundle": "^5.3",
         "kiwi/contao-cmx": "^1.0"
     },
     "require-dev": {
