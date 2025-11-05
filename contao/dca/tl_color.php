@@ -73,7 +73,7 @@ $GLOBALS['TL_DCA']['tl_color'] = [
         'variable' => [
             'sorting' => true,
             'inputType' => 'text',
-            'eval' => ['mandatory' => true, 'rgxp' => 'custom', 'customRgxp' => '#^[a-z]+$#', 'tl_class' => 'w50', 'maxlength' => 32],
+            'eval' => ['mandatory' => true, 'rgxp' => 'custom', 'customRgxp' => '#^[a-z-]+$#', 'tl_class' => 'w50', 'maxlength' => 32],
             'sql' => "varchar(32) NOT NULL default ''",
         ],
         'value' => [
