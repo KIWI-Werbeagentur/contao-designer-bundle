@@ -5,6 +5,7 @@
 {% set backgroundClass = background and hasBackground(background) ? " mod_article--background" %}
 {% set class = "#{class}#{backgroundClass}" %}
 {% set attributes = attributes|default(attrs()).mergeWith(getGlobalStrings(_context, 'scheme')) %}
+{% set cssID = cssID|default("") ~ getGlobalStrings(_context, 'scheme') %}
 
 {% block content %}
     {% block background %}
@@ -22,6 +23,12 @@
     {% endblock background %}
 
     <div class="mod_article__main main {{ row_classes }}" {{ getGlobalStrings(_context, 'scheme') }}>
+        {% if prefixMain ?? false %}
+            {{ prefixMain }}
+        {% endif %}
         {{ parent() }}
+        {% if suffixMain ?? false %}
+            {{ suffixMain }}
+        {% endif %}
     </div>
 {% endblock %}

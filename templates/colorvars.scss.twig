@@ -1,0 +1,15 @@
+{% for color in colors %}
+ ${{ color.name }}:{{ color.value }};
+{% endfor %}
+
+$colors: (
+ {% for color in colors %}
+  "{{ color.name }}": ${{ color.name }},
+ {% endfor %}
+);
+
+:root {
+ {% for color in colors %}
+  --color-{{ color.name }}: {{ color.value }};
+ {% endfor %}
+}

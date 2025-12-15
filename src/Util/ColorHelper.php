@@ -3,6 +3,7 @@
 namespace Kiwi\Contao\DesignerBundle\Util;
 
 use Contao\Model\Collection;
+use Contao\System;
 use Kiwi\Contao\DesignerBundle\Models\ColorModel;
 
 class ColorHelper
@@ -176,25 +177,15 @@ class ColorHelper
      */
     public static function generateScssRules(iterable $colorCollection): string
     {
-        $strScss = '';
-        $strCssVars = [];
+        $arrData = [];
 
         foreach ($colorCollection as $objColor) {
-            $color = static::getCssColorFromValue($objColor->value);
-            $strScss .= '$' . $objColor->variable . ': ' . $color . ";\n";
-            $strCssVars[] = '--color-' . $objColor->variable . ': ' . $color . ";";
+            $arrData[] = [
+                'name' => $objColor->variable,
+                'value' => static::getCssColorFromValue($objColor->value),
+            ];
         }
 
-        $strScss .= "\n".'$colors: ('."\n";
-
-        foreach ($colorCollection as $objColor) {
-            $strScss .= '  "' . $objColor->variable . '": $' . $objColor->variable . ",\n";
-        }
-
-        $strCss = implode("\n", $strCssVars);
-
-        $strScss .= ");\n\n:root{\n$strCss\n}";
-
-        return $strScss;
+        return System::getContainer()->get('twig')->render('@KiwiDesigner/colorvars.scss.twig', ['colors' => $arrData]);;
     }
 }

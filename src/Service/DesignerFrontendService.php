@@ -65,6 +65,9 @@ class DesignerFrontendService
                     $strValue = FilesModel::findByPk($strUuid)->path;
                 }
                 break;
+            case 'value':
+                $strValue = $this->arrData;
+                break;
         }
 
         if (isset($GLOBALS['TL_HOOKS']['resolveDesignValues']) && \is_array($GLOBALS['TL_HOOKS']['resolveDesignValues'])) {

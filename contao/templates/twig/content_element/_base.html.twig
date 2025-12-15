@@ -5,14 +5,14 @@
 {% set hl_attributes = headline.attributes|default(attrs()).addClass("main__headline headline").addClass(data.headlineClass ?? '') %}
 {% set headline = headline|default(_context)|merge({'attributes':hl_attributes}) %}
 
-{% set content_attributes = content_attributes|default(attrs()).addClass("main__content").addClass(nested_fragments ? inner_classes) %}
+{% set content_attributes = data ? content_attributes|default(attrs()).addClass("main__content").addClass(nested_fragments ? inner_classes) %}
 {% set inner_classes = "" %}
 
-{% set attributes = attributes|default(attrs()).mergeWith(getGlobalStrings(data, 'scheme')) %}
+{% set attributes = data ? attributes|default(attrs()).mergeWith(getGlobalStrings(data, 'scheme')) %}
 
 {% set attributes = attributes|default(attrs()).addClass("content content--#{type|replace({'_': '-'})}") %}
 
-{% if data.background %}
+{% if data and data.background %}
     {% set attributes = attributes|default(attrs()).addClass("content--background").mergeWith(attributes|default) %}
 {% endif %}
 

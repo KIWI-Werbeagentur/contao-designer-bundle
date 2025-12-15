@@ -4,12 +4,15 @@ $schemes: (
         "inherit": (
         {% for prop in props  %}
                 "{{ prop }}": inherit,
+                "{{ prop }}_brightness": 50,
         {% endfor %}
         ),
   {%  for scheme in schemes %}
         "{{scheme.alias}}": (
         {% for prop in props  %}
                 "{{ prop }}": {% if scheme[prop] ?? 0 %}{% if scheme[prop ~ 'Brightness'] %}{{ 'change-color(#{$' }}{{ getColorVar(scheme[prop]) }}{{ '}, $lightness:' }}{{ scheme[prop ~ 'Brightness'] }}{{ '%)' }}{% else %}{{ '#{$' }}{{ getColorVar(scheme[prop]) }}{{ '}' }}{% endif %}{% else %} inherit {% endif %},
+                {% if scheme[prop] ?? 0 %}"{{ prop }}_var": var(--color-{{ getColorVar(scheme[prop]) }}),{% endif %}
+                "{{ prop }}_brightness": {% if scheme[prop ~ 'Brightness'] %}{{ scheme[prop ~ 'Brightness'] }}{% else %}50{% endif %},
         {% endfor %}
         ),
   {% endfor %}
@@ -17,7 +20,11 @@ $schemes: (
 
 @mixin scheme($scheme: 'inherit') {
   {% for prop in props  %}
-    --scheme-color-{{ prop }}: #{map-get($schemes, $scheme, '{{ prop }}')};
+    @if map-has-key(map-get($schemes, $scheme), '{{ prop }}_var') {
+      --scheme-color-{{ prop }}: color-mix(in oklab, color-mix(in oklab, #FFFFFF calc(#{map-get($schemes, $scheme, '{{ prop }}_brightness')} * 1%), #000000) calc(abs(#{map-get($schemes, $scheme, '{{ prop }}_brightness')} * -2 + 100) * 1%), #{map-get($schemes, $scheme, '{{ prop }}_var')});
+    }
+    --scheme-color-{{ prop }}-var: #{map-get($schemes, $scheme, '{{ prop }}_var')};
+    --scheme-color-{{ prop }}-brightness: #{map-get($schemes, $scheme, '{{ prop }}_brightness')};
   {% endfor %}
 }
 

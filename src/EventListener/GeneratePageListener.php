@@ -15,6 +15,19 @@ class GeneratePageListener
     {
         $arrFramework = StringUtil::deserialize($objLayout->framework, true);
 
+        $page = $objPage;
+        while ($page) {
+            $targetPath = "/files/pages/_colorvars_{$page->id}.scss";
+            $file = System::getContainer()->getParameter('kernel.project_dir') . $targetPath;
+
+            if(file_exists($file)) {
+                $GLOBALS['TL_CSS'][] = "$targetPath|static";
+                break;
+            }
+
+            $page = PageModel::findByPk($page->pid);
+        }
+
         foreach ($arrFramework as $strFile) {
             switch ($strFile) {
                 case 'color_styles':
@@ -29,8 +42,8 @@ class GeneratePageListener
             }
         }
 
-        $arrFramework = array_filter($arrFramework, function($v) {
-            return !in_array($v,['color_styles']);
+        $arrFramework = array_filter($arrFramework, function ($v) {
+            return !in_array($v, ['color_styles']);
         });
         // remove styles from array, so files do not get added twice
         $objLayout->framework = serialize($arrFramework);

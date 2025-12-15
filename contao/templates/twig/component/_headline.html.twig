@@ -1,6 +1,8 @@
 {% use "@Contao/component/_headline.html.twig" %}
 
 {% block headline_component %}
+    {% set attributes = attributes|default(attrs()).addClass("main__headline headline").addClass(data.headlineClass ?? '') %}
+
     {% block topline %}
         {% if data.topline ?? false %}<p class="main__topline topline">{{ data.topline }}</p>{% endif %}
     {% endblock topline %}
