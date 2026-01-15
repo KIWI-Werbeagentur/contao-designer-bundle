@@ -64,6 +64,8 @@ if ($GLOBALS['TL_CONFIG']['useRTE']):
             document_base_url: '<?= Environment::get('base') ?>',
             entities: '160,nbsp,60,lt,62,gt,173,shy',
             branding: false,
+            promotion: false,
+            skin: (document.documentElement.dataset.colorScheme === 'dark' ? 'tinymce-5-dark' : 'tinymce-5'),
             setup: function (editor) {
                 editor.getElement().removeAttribute('required');
                 document.querySelectorAll('[accesskey]').forEach(function (el) {
@@ -204,16 +206,16 @@ if ($GLOBALS['TL_CONFIG']['useRTE']):
                     }
                 });
             },
-            file_picker_types: <?= json_encode($this->fileBrowserTypes) ?>,
+            file_picker_types: '<?= json_encode($this->fileBrowserTypes) ?>',
             <?php $this->endblock(); ?>
 
             <?php $this->block('content_css'); ?>
-            content_css: ['system/themes/<?= Backend::getTheme() ?>/tinymce.min.css', 'bundles/kiwibootstrap/tinymce.css'],
+            content_css: [document.documentElement.dataset.colorScheme === 'dark' ? '<?= $this->asset('tinymce-dark.css', 'system/themes/'.Backend::getTheme()) ?>' : '<?= $this->asset('tinymce.css', 'system/themes/'.Backend::getTheme()) ?>','bundles/kiwibootstrap/tinymce.css'],
             importcss_file_filter: 'tinymce.min.css',
             <?php $this->endblock(); ?>
 
             <?php $this->block('plugins'); ?>
-            plugins: 'autosave charmap code fullscreen image importcss link lists paste searchreplace stripnbsp tabfocus table visualblocks visualchars',
+            plugins: 'autosave charmap code fullscreen image importcss link lists searchreplace stripnbsp table visualblocks visualchars',
             <?php $this->endblock(); ?>
 
             <?php $this->block('valid_elements'); ?>
@@ -225,7 +227,7 @@ if ($GLOBALS['TL_CONFIG']['useRTE']):
             <?php $this->endblock(); ?>
 
             <?php $this->block('toolbar'); ?>
-            toolbar: 'link unlink | image | formatselect headingclassselect | bold italic span | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | undo redo | code',
+            toolbar: 'link unlink | image | blocks headingclassselect | bold italic span | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | undo redo | code',
             <?php $this->endblock(); ?>
 
             <?php $this->block('contextmenu'); ?>
@@ -271,7 +273,6 @@ if ($GLOBALS['TL_CONFIG']['useRTE']):
             <?php endif; ?>
 
             browser_spellcheck: true,
-            tabfocus_elements: ':prev,:next',
             importcss_append: true
         });
     </script>
