@@ -31,15 +31,18 @@
         {% endif %}
     {% endblock background %}
     {% block main %}
-        {% if block('content')|spaceless is not empty and block('headline_component')|spaceless is not empty %}
+        {% set content_block = block('content')|spaceless %}
+        {% set headline_block = block('headline_component')|spaceless %}
+
+        {% if content_block is not empty and headline_block is not empty %}
             <div class="content__main main {{ main_class ?? '' }}">
                 {% if headline.text %}
-                    {{ block('headline_component') }}
+                    {{ headline_block|raw }}
                 {% endif %}
 
                 {% block content_wrapper %}
                     <div {{ content_attributes }}>
-                        {% block content %}{% endblock %}
+                        {{ content_block|raw }}
                     </div>
                 {% endblock content_wrapper %}
             </div>
