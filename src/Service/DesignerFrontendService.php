@@ -36,7 +36,7 @@ class DesignerFrontendService
                 $strValue = ColorModel::findByPk($strValue)->variable ?? $strValue;
                 break;
             case 'scheme':
-                $strValue = ColorSchemeModel::findByPk($this->arrData['id'])->alias ?? 'inherit';
+                $strValue = ColorSchemeModel::findByPk($this->arrData)->alias ?? 'inherit';
                 break;
             case 'figure':
                 $objFigureBuilder = System::getContainer()->get('contao.image.studio')->createFigureBuilder();
