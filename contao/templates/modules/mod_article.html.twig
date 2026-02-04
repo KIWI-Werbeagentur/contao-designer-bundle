@@ -4,7 +4,7 @@
 {% set inner_classes = "" %}
 {% set backgroundClass = background and hasBackground(background) ? " mod_article--background" %}
 {% set class = "#{class}#{backgroundClass}" %}
-{% set attributes = attributes|default(attrs()).mergeWith(getClasses(_context, 'scheme')) %}
+{% set attributes = attributes|default(attrs()).mergeWith(getGlobalStrings(_context, 'scheme')) %}
 
 {% block content %}
     {% block background %}
@@ -14,14 +14,14 @@
                     {% if backgroundOverwrite %}
                         {{ getClasses(_context, 'backgroundOverwrite', 'backgroundOverwrite')|raw }}
                     {% else %}
-                        {{ getClasses(_context, 'backgroundElement', 'background')|raw }}
+                        {{ getGlobalStrings(_context, 'backgroundElement', 'background')|raw }}
                     {% endif %}
                 </div>
             {% endif %}
         {% endif %}
     {% endblock background %}
 
-    <div class="mod_article__main main {{ row_classes }}" {{ getClasses(_context, 'scheme') }}>
+    <div class="mod_article__main main {{ row_classes }}" {{ getGlobalStrings(_context, 'scheme') }}>
         {{ parent() }}
     </div>
 {% endblock %}
