@@ -8,7 +8,7 @@
 {% set content_attributes = content_attributes|default(attrs()).addClass("main__content").addClass(nested_fragments ? inner_classes) %}
 {% set inner_classes = "" %}
 
-{% set attributes = attributes|default(attrs()).mergeWith(getGlobalStrings(data, 'scheme')) %}
+{% set attributes = attributes|default(attrs()).mergeWith(getClasses(data, 'scheme')) %}
 
 {% set attributes = attributes|default(attrs()).addClass("content content--#{type|replace({'_': '-'})}") %}
 
@@ -24,7 +24,7 @@
                     {% if data.backgroundOverwrite %}
                         {{ getClasses(data, 'backgroundOverwrite', 'backgroundOverwrite')|raw }}
                     {% else %}
-                        {{ getGlobalStrings(data, 'backgroundElement', 'background')|raw }}
+                        {{ getClasses(data, 'backgroundElement', 'background')|raw }}
                     {% endif %}
                 </div>
             {% endif %}
