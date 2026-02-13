@@ -57,6 +57,7 @@ if ($GLOBALS['TL_CONFIG']['useRTE']):
     <script>window.tinymce || document.write('<script src="<?= $this->asset('js/tinymce.min.js', 'contao-components/tinymce4') ?>">\x3C/script>')</script>
     <script>
         window.tinymce && tinymce.init({
+            license_key: 'gpl',
             selector: '#<?= $this->selector ?>',
             min_height: 336,
             language: '<?= Backend::getTinyMceLanguage() ?>',
