@@ -30,11 +30,11 @@ class SyncColorVars extends AbstractMigration
         $scssColors = $this->parseScssColors();
         $dbColors = $this->getDbColors();
 
-        if (array_any(array_keys($scssColors), fn($variable) => !isset($dbColors[$variable]))) {
+        if (!empty(array_diff_key($scssColors, $dbColors))) {
             return true;
         }
 
-        return array_any(array_keys($dbColors), fn($variable) => !isset($scssColors[$variable]));
+        return !empty(array_diff_key($dbColors, $scssColors));
 
     }
 
