@@ -45,9 +45,7 @@ class SyncColorVars extends AbstractMigration
         $dbColors = $this->getDbColors();
         $messages = [];
 
-        System::loadLanguageFile('tl_color', 'de');
-
-        $categories = array_keys($GLOBALS['TL_LANG']['tl_color']['category']['options']);
+        $categories = $GLOBALS['design']['color']['categories'];
 
         foreach ($scssColors as $variable => $value) {
             if (!isset($dbColors[$variable])) {
