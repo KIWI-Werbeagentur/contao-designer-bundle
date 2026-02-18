@@ -1,0 +1,111 @@
+<?php
+
+namespace Kiwi\Contao\DesignerBundle\Migration;
+
+use Contao\CoreBundle\Migration\AbstractMigration;
+use Contao\CoreBundle\Migration\MigrationResult;
+use Contao\System;
+use Doctrine\DBAL\Connection;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
+
+class SyncColorVars extends AbstractMigration
+{
+    public function __construct(
+        private readonly Connection $connection,
+        #[Autowire('%kernel.project_dir%')]
+        private readonly string $projectDir,
+    ) {
+    }
+
+    public function getName(): string
+    {
+        return 'Sync Color Vars';
+    }
+
+    public function shouldRun(): bool
+    {
+        if (!$this->connection->createSchemaManager()->tablesExist(['tl_color'])) {
+            return false;
+        }
+
+        $scssColors = $this->parseScssColors();
+        $dbColors = $this->getDbColors();
+
+        if (array_any(array_keys($scssColors), fn($variable) => !isset($dbColors[$variable]))) {
+            return true;
+        }
+
+        return array_any(array_keys($dbColors), fn($variable) => !isset($scssColors[$variable]));
+
+    }
+
+    public function run(): MigrationResult
+    {
+        $scssColors = $this->parseScssColors();
+        $dbColors = $this->getDbColors();
+        $messages = [];
+
+        System::loadLanguageFile('tl_color', 'de');
+
+        $categories = array_keys($GLOBALS['TL_LANG']['tl_color']['category']['options']);
+
+        foreach ($scssColors as $variable => $value) {
+            if (!isset($dbColors[$variable])) {
+                $this->connection->insert('tl_color', [
+                    'tstamp' => time(),
+                    'title' => $variable,
+                    'variable' => $variable,
+                    'value' => $value,
+                    'isApplicable' => '1',
+                    'category' => serialize($categories)
+                ]);
+                $messages[] = "Added: $variable ($value)";
+            }
+        }
+
+        foreach ($dbColors as $variable => $row) {
+            if (!isset($scssColors[$variable])) {
+                $this->connection->delete('tl_color', ['id' => $row['id']]);
+                $messages[] = "Removed: $variable";
+            }
+        }
+
+        return $this->createResult(true, implode(', ', $messages));
+    }
+
+    private function parseScssColors(): array
+    {
+        $filePath = $this->projectDir . '/files/themes/_colorvars.scss';
+
+        if (!file_exists($filePath)) {
+            return [];
+        }
+
+        $content = file_get_contents($filePath);
+        $colors = [];
+
+        if (preg_match('/:root\s*\{([^}]*)\}/', $content, $rootMatch)) {
+            preg_match_all('/--color-([a-z][a-z0-9-]*):\s*([^;]+);/', $rootMatch[1], $matches, PREG_SET_ORDER);
+            foreach ($matches as $match) {
+                $colors[trim($match[1])] = trim($match[2]);
+            }
+        }
+
+        return $colors;
+    }
+
+    private function getDbColors(): array
+    {
+        $rows = $this->connection->fetchAllAssociative('SELECT id, variable, value FROM tl_color');
+        $colors = [];
+
+        foreach ($rows as $row) {
+            $colors[$row['variable']] = [
+                'id' => $row['id'],
+                'value' => $row['value']
+            ];
+        }
+
+        return $colors;
+    }
+}
