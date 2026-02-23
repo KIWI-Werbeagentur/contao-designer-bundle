@@ -15,3 +15,4 @@ services:
       - '@kiwi.contao.designer.frontend'
     tags:
       - 'twig.extension'
+  Kiwi\Contao\DesignerBundle\Migration\SyncColorVars: ~
