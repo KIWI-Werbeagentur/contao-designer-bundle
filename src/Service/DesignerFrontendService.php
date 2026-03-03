@@ -54,7 +54,7 @@ class DesignerFrontendService
             case 'picture':
             case 'video':
             case 'audio':
-                $strValue = FilesModel::findByPk($strValue)->path;
+                $strValue = FilesModel::findByPk($strValue)?->path ?? '';
                 break;
             case 'imageOverwrite':
                 $strTable = $this->arrData['overwriteTable'] ?? "";
