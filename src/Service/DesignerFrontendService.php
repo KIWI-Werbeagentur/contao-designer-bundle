@@ -61,8 +61,8 @@ class DesignerFrontendService
                 $strField = $this->arrData['overwriteField'] ?? "";
 
                 if ($strTable && $strField) {
-                    $strUuid = Database::getInstance()->prepare("SELECT {$strField} FROM {$strTable} WHERE alias=?")->execute(Input::get($this->arrData['overwriteParameter'] ?: 'auto_item'))->fetchAssoc()[$strField];
-                    $strValue = FilesModel::findByPk($strUuid)->path;
+                    $strUuid = Database::getInstance()->prepare("SELECT {$strField} FROM {$strTable} WHERE alias=?")->execute(Input::get($this->arrData['overwriteParameter'] ?: 'auto_item'))->fetchAssoc()[$strField] ?? 0;
+                    $strValue = FilesModel::findByPk($strUuid)->path ?? '';
                 }
                 break;
             case 'value':
