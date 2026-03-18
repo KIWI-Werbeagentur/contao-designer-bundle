@@ -18,7 +18,7 @@ if (!$GLOBALS['responsive'] ?? true) {
 }
 
 $GLOBALS['TL_DCA']['tl_article']['palettes']['__selector__'][] = 'backgroundOverwrite';
-$GLOBALS['TL_DCA']['tl_article']['subpalettes']['backgroundOverwrite'] = "overwriteTable,overwriteField";
+$GLOBALS['TL_DCA']['tl_article']['subpalettes']['backgroundOverwrite'] = "overwriteTable,overwriteField,overwriteParameter";
 
 PaletteManipulatorExtended::create()
     ->addField(['backgroundOverwrite', 'background', 'scheme'], 'template_legend', PaletteManipulatorExtended::POSITION_APPEND)
