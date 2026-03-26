@@ -12,10 +12,7 @@ class ParseWidgetListener
     {
         $request = System::getContainer()->get('request_stack')->getCurrentRequest();
         if(!System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest($request)) {
-            try {
-                $objWidget->inputClasses .= System::getContainer()->get('kiwi.contao.designer.frontend')->getCtaClasses($objWidget);
-            } catch (\Exception $e) {
-            }
+            $objWidget->inputClasses .= System::getContainer()->get('kiwi.contao.designer.frontend')->getCtaClasses($objWidget);
             $objWidget->strName = str_replace("[]", "", $objWidget->strName);
             return $objWidget->inherit();
         }

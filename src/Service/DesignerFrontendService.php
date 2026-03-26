@@ -82,7 +82,11 @@ class DesignerFrontendService
         if (!$strField) $strField = $strMapping;
         $this->arrData = $arrData;
 
-        $strClass = $GLOBALS['design'][$strMapping][$this::getProp($arrData, $strField)] ?? $GLOBALS['design'][$strMapping] ?? false;
+        if (is_array($GLOBALS['design'][$strMapping])) {
+            $strClass = $GLOBALS['design'][$strMapping][$this::getProp($arrData, $strField)] ?? '';
+        } else {
+            $strClass = $GLOBALS['design'][$strMapping] ?? '';
+        }
 
         if ($strClass) {
             return preg_replace_callback('/\{{(\w+)}}/', function ($match) use ($arrData) {
