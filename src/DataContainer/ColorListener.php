@@ -180,7 +180,7 @@ class ColorListener
 
         if ($objColorCollection && $strTable) {
             foreach ($objColorCollection as $objColor) {
-                $arrCategories = StringUtil::deserialize($objColor->category);
+                $arrCategories = StringUtil::deserialize($objColor->category, true);
                 if (!($GLOBALS['TL_DCA'][$strTable]['fields'][$strField]['category'] ?? false) || $objColor->isApplicable && (!$arrCategories || in_array($GLOBALS['TL_DCA'][$strTable]['fields'][$strField]['category'], $arrCategories))) {
                     $arrOptions[$objColor->id] = $objColor->title;
                 }

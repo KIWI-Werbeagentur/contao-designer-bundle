@@ -18,7 +18,7 @@ class ColorModel extends Model
     {
         $arrColors = [];
         foreach (ColorModel::findBy('isApplicable', 1) ?? [] as $objColor) {
-            $arrCats = StringUtil::deserialize($objColor->category);
+            $arrCats = StringUtil::deserialize($objColor->category, true);
             if(!$arrCats || in_array($strApplicapleCat, $arrCats)){
                 $arrColors[] = $objColor;
             }

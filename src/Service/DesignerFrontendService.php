@@ -108,7 +108,7 @@ class DesignerFrontendService
 
     public function hasBackground($strBackground)
     {
-        $arrBackgrounds = StringUtil::deserialize($strBackground);
+        $arrBackgrounds = StringUtil::deserialize($strBackground, true);
 
         foreach ($arrBackgrounds as $arrBackground) {
             if ($arrBackground['background'] != 'none') return true;
