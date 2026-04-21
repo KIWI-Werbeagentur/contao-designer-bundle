@@ -207,7 +207,7 @@ if ($GLOBALS['TL_CONFIG']['useRTE']):
                     }
                 });
             },
-            file_picker_types: '<?= json_encode($this->fileBrowserTypes) ?>',
+            file_picker_types: '<?= $this->fileBrowserTypes ?>',
             <?php $this->endblock(); ?>
 
             <?php $this->block('content_css'); ?>
