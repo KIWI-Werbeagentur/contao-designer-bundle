@@ -36,6 +36,10 @@ class DesignerFrontendService
                 $strValue = ColorModel::findByPk($strValue)->variable ?? $strValue;
                 break;
             case 'scheme':
+                if ('inherit' === $this->arrData) {
+                    $strValue = 'inherit';
+                    break;
+                }
                 $strValue = ColorSchemeModel::findByPk($this->arrData)->alias ?? 'inherit';
                 break;
             case 'figure':
