@@ -2,7 +2,6 @@
 
 use Kiwi\Contao\DesignerBundle\Models\ColorSchemeCategoryModel;
 use Kiwi\Contao\DesignerBundle\Models\ColorSchemeModel;
-use Kiwi\Contao\DesignerBundle\Widget\Backend\IconedSelectMenuWidget;
 use Kiwi\Contao\DesignerBundle\Models\ColorModel;
 
 $GLOBALS['design']['ctaDesign'] = [
