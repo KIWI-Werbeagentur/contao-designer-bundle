@@ -17,7 +17,7 @@ $schemes: (
 
 @mixin scheme($scheme: 'inherit') {
   {% for prop in props  %}
-    --scheme-color-{{ prop }}: #{map-get($schemes, $scheme, '{{ prop }}')};
+    --scheme-color-{{ prop }}: #{map-get(map-get($schemes, $scheme), '{{ prop }}')};
   {% endfor %}
 }
 
