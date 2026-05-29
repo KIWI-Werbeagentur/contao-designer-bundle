@@ -4,13 +4,13 @@
     {% set headline = headline|default(_context) %}
     <div {{ headline.attributes|default }}>
         {% block topline %}
-            {% if data.topline ?? false %}<p class="main__topline topline">{{ data.topline }}</p>{% endif %}
+            {% if data.topline ?? false %}<p class="main__topline topline">{{ data.topline|insert_tag_raw }}</p>{% endif %}
         {% endblock topline %}
         
         {{ parent() }}
         
         {% block subline %}
-            {% if data.subline ?? false %}<p class="main__subline subline">{{ data.subline }}</p>{% endif %}
+            {% if data.subline ?? false %}<p class="main__subline subline">{{ data.subline|insert_tag_raw }}</p>{% endif %}
         {% endblock subline %}
     </div>
 {% endblock %}
