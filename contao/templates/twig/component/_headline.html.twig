@@ -1,11 +1,18 @@
 {% use "@Contao/component/_headline.html.twig" %}
 
 {% block headline_component %}
-    {% block topline %}
-        {% if data.topline ?? false %}<p class="main__topline topline">{{ data.topline }}</p>{% endif %}
-    {% endblock topline %}
-    {{ parent() }}
-    {% block subline %}
-        {% if data.subline ?? false %}<p class="main__subline subline">{{ data.subline }}</p>{% endif %}
-    {% endblock subline %}
+    {% set headline = headline|default(_context) %}
+    <div {{ headline.attributes|default }}>
+        {% block topline %}
+            {% if data.topline ?? false %}<p class="main__topline topline">{{ data.topline }}</p>{% endif %}
+        {% endblock topline %}
+        
+        {{ parent() }}
+        
+        {% block subline %}
+            {% if data.subline ?? false %}<p class="main__subline subline">{{ data.subline }}</p>{% endif %}
+        {% endblock subline %}
+    </div>
 {% endblock %}
+
+{% block headline_attributes %} class="{{ _context.data.headlineClass }}"{% endblock %}
