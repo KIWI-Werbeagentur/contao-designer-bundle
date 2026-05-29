@@ -17,4 +17,5 @@ services:
       - 'twig.extension'
   Kiwi\Contao\DesignerBundle\Migration\SyncColorVars: ~
   Kiwi\Contao\DesignerBundle\DataContainer\ColorSchemeListener: ~
+  Kiwi\Contao\DesignerBundle\DataContainer\CtaListener: ~
   Kiwi\Contao\DesignerBundle\Command\GenerateSchemesCommand: ~

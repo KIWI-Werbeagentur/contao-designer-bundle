@@ -16,7 +16,9 @@ $GLOBALS['TL_DCA']['tl_content']['subpalettes']['isCta'] = 'ctaColor,ctaDesign';
 
 PaletteManipulator::create()
     ->addField('isCta', 'template_legend', PaletteManipulator::POSITION_APPEND)
-    ->applyToPalette('hyperlink', 'tl_content');
+    ->applyToPalette('hyperlink', 'tl_content')
+    ->applyToPalette('download', 'tl_content')
+    ->applyToPalette('downloads', 'tl_content');
 
 $GLOBALS['TL_DCA']['tl_content']['fields'] += $GLOBALS['TL_DCA']['headline']['fields'];
 
