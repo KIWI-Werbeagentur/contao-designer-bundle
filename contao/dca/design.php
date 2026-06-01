@@ -141,7 +141,7 @@ $GLOBALS['TL_DCA']['background']['fields'] =
             'label' => &$GLOBALS['TL_LANG']['design']['backgroundOverwrite'],
             'inputType' => 'checkbox',
             'eval' => ['submitOnChange' => true, 'tl_class' => 'clr m12'],
-        'sql' => "char(1) NOT NULL default '3'",
+            'sql' => "char(1) NOT NULL default ''",
         ],
         'overwriteTable' => [
             'label' => &$GLOBALS['TL_LANG']['design']['overwriteTable'],
