@@ -1,9 +1,10 @@
 <?php
 
+use Contao\System;
 use Kiwi\Contao\DesignerBundle\DataContainer\ColorListener;
 use Kiwi\Contao\DesignerBundle\DataContainer\ColorSchemeListener;
 
-\Contao\System::loadLanguageFile('design');
+System::loadLanguageFile('design');
 
 $GLOBALS['TL_DCA']['cta']['fields'] = [
     'isCta' => [
@@ -11,7 +12,7 @@ $GLOBALS['TL_DCA']['cta']['fields'] = [
         'reference' => &$GLOBALS['TL_LANG']['design']['isCta'],
         'inputType' => 'checkbox',
         'eval' => ['submitOnChange' => true, 'tl_class' => 'clr m12'],
-        'sql' => "char(1) NOT NULL default '1'",
+        'sql' => "char(1) NOT NULL default '3'",
     ],
     'ctaColor' => [
         'label' => &$GLOBALS['TL_LANG']['design']['ctaColor'],
@@ -122,7 +123,7 @@ $GLOBALS['TL_DCA']['background']['fields'] =
             'reference'               => &$GLOBALS['TL_LANG']['MSC'],
             'eval'                    => array('rgxp'=>'natural', 'includeBlankOption'=>true, 'nospace'=>true, 'helpwizard'=>true, 'tl_class'=>'w50 clr'),
             'options_callback' => static function () {
-                return \Contao\System::getContainer()->get('contao.image.sizes')->getOptionsForUser(\Contao\BackendUser::getInstance());
+                return System::getContainer()->get('contao.image.sizes')->getOptionsForUser(\Contao\BackendUser::getInstance());
             },
             'sql'                     => "varchar(128) COLLATE ascii_bin NOT NULL default ''"
         ),
@@ -140,13 +141,13 @@ $GLOBALS['TL_DCA']['background']['fields'] =
             'label' => &$GLOBALS['TL_LANG']['design']['backgroundOverwrite'],
             'inputType' => 'checkbox',
             'eval' => ['submitOnChange' => true, 'tl_class' => 'clr m12'],
-            'sql' => "char(1) NOT NULL default ''",
+        'sql' => "char(1) NOT NULL default '3'",
         ],
         'overwriteTable' => [
             'label' => &$GLOBALS['TL_LANG']['design']['overwriteTable'],
             'inputType' => 'select',
             'options_callback' => function () {
-                $strDb = \Contao\System::getContainer()->get('doctrine.dbal.default_connection')->getDatabase();
+                $strDb = System::getContainer()->get('doctrine.dbal.default_connection')->getDatabase();
                 $arrTables = \Contao\Database::getInstance()->prepare("SELECT DISTINCT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = ?")->execute($strDb)->fetchEach('TABLE_NAME');
                 return $arrTables;
             },
@@ -158,7 +159,7 @@ $GLOBALS['TL_DCA']['background']['fields'] =
             'inputType' => 'select',
             'options_callback' => function ($dc) {
                 if (!$dc->activeRecord->overwriteTable) return [];
-                $strDb = \Contao\System::getContainer()->get('doctrine.dbal.default_connection')->getDatabase();
+                $strDb = System::getContainer()->get('doctrine.dbal.default_connection')->getDatabase();
                 $arrFields = \Contao\Database::getInstance()->prepare("SELECT DISTINCT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = ? AND TABLE_SCHEMA = ?")->execute($dc->activeRecord->overwriteTable, $strDb)->fetchEach('COLUMN_NAME');
                 \Contao\Controller::loadDataContainer($dc->activeRecord->overwriteTable);
 
