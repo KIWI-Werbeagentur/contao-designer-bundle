@@ -2,7 +2,7 @@
 
 {% set link_attributes = attrs().addClass(getCtaClasses(data)).mergeWith(link_attributes|default) %}
 
-{% set hl_attributes = headline.attributes|default(attrs()).addClass("main__headline headline").addClass(data.headlineClass ?? '') %}
+{% set hl_attributes = headline.attributes|default(attrs()) %}
 {% set headline = headline|default(_context)|merge({'attributes':hl_attributes}) %}
 
 {% set content_attributes = content_attributes|default(attrs()).addClass("main__content").addClass(nested_fragments and not prevent_inner_classes|default ? inner_classes) %}

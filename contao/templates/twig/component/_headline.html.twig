@@ -2,11 +2,16 @@
 
 {% block headline_component %}
     {% set headline = headline|default(_context) %}
-    <div {{ headline.attributes|default }}>
+    {% set headline_wrapper_attributes = headline.attributes|default(attrs()) %}
+    {% if headline_wrapper_attributes.class is not defined %}
+        {% set headline_wrapper_attributes = attrs(headline_wrapper_attributes).addClass('headline-wrapper') %}
+    {% endif %}
+    <div {{ headline_wrapper_attributes }}>
         {% block topline %}
             {% if data.topline ?? false %}<p class="main__topline topline">{{ data.topline|insert_tag_raw }}</p>{% endif %}
         {% endblock topline %}
         
+        {% set headline = headline|merge({'attributes': attrs().addClass("main__headline headline").addClass(data.headlineClass ?? '')}) %}
         {{ parent() }}
         
         {% block subline %}
@@ -14,5 +19,3 @@
         {% endblock subline %}
     </div>
 {% endblock %}
-
-{% block headline_attributes %} class="{{ _context.data.headlineClass }}"{% endblock %}
