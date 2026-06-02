@@ -7,20 +7,20 @@ use Contao\Database;
 
 class CtaListener
 {
-    private array $ctaDefaultOff = [
+    public const array CTA_DEFAULT_OFF = [
         'download',
         'downloads',
     ];
 
-    private const string SENTINEL = '3';
+    public const string UNSET_VALUE = '3';
 
     public function loadCallback(mixed $value, DataContainer $dc): mixed
     {
-        if ($value !== self::SENTINEL) {
+        if ($value !== self::UNSET_VALUE) {
             return $value;
         }
 
-        if ($dc->activeRecord !== null && \in_array($dc->activeRecord->type, $this->ctaDefaultOff, true)) {
+        if ($dc->activeRecord !== null && \in_array($dc->activeRecord->type, self::CTA_DEFAULT_OFF, true)) {
             return '';
         }
 
@@ -31,7 +31,7 @@ class CtaListener
     {
         $newType = $arrValues['type'] ?? null;
 
-        if (!$newType || !\in_array($newType, $this->ctaDefaultOff, true)) {
+        if (!$newType || !\in_array($newType, self::CTA_DEFAULT_OFF, true)) {
             return $arrValues;
         }
 
@@ -40,7 +40,7 @@ class CtaListener
                 ->prepare("SELECT isCta FROM " . $dc->table . " WHERE id=?")
                 ->execute((int) $dc->id);
 
-            if ($record->numRows && $record->isCta === self::SENTINEL) {
+            if ($record->numRows && $record->isCta === self::UNSET_VALUE) {
                 $arrValues['isCta'] = '';
             }
         }
