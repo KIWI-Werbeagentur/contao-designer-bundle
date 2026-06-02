@@ -106,7 +106,8 @@ class DesignerFrontendService
 
     public function getCtaClasses($arrData)
     {
-        if (!($this::getProp($arrData, 'isCta') ?: false)) return "";
+        $isCta = $this::getProp($arrData, 'isCta');
+        if ($isCta === '3' || !$isCta) return "";
         return $this->getClasses($arrData, 'ctaDesign');
     }
 

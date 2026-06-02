@@ -12,7 +12,7 @@ class CtaListener
         'downloads',
     ];
 
-    private const SENTINEL = '3';
+    private const string SENTINEL = '3';
 
     public function loadCallback(mixed $value, DataContainer $dc): mixed
     {
@@ -29,10 +29,6 @@ class CtaListener
 
     public function beforeSubmitCallback(array $arrValues, DataContainer $dc): array
     {
-        if ($dc->table !== 'tl_content') {
-            return $arrValues;
-        }
-
         $newType = $arrValues['type'] ?? null;
 
         if (!$newType || !\in_array($newType, $this->ctaDefaultOff, true)) {
@@ -41,7 +37,7 @@ class CtaListener
 
         if (!isset($arrValues['isCta'])) {
             $record = Database::getInstance()
-                ->prepare("SELECT isCta FROM tl_content WHERE id=?")
+                ->prepare("SELECT isCta FROM " . $dc->table . " WHERE id=?")
                 ->execute((int) $dc->id);
 
             if ($record->numRows && $record->isCta === self::SENTINEL) {
