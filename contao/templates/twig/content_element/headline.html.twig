@@ -1,0 +1,12 @@
+{% extends "@Contao/content_element/_base.html.twig" %}
+{% use "@Contao/component/_headline.html.twig" %}
+
+{% block inner %}
+<div class="content__main main {{ main_class ?? '' }}">
+    {# The "headline" content element does not have a wrapper element, so the
+       wrapper attributes must be applied to the "_headline" component. #}
+    {% with {headline: headline|default(_context)} %}
+        {{ block('headline_component') }}
+    {% endwith %}
+</div>
+{% endblock %}
