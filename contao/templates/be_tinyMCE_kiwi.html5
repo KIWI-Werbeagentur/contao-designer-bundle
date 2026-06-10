@@ -237,7 +237,7 @@ if ($this->enableTinyMce):
 
         <?php foreach (ColorModel::findApplicable('cta') as $objColor):?>
         <?php foreach ($GLOBALS['design']['ctaDesign'] as $strName => $strDesign):?>
-        {title: '<?= $GLOBALS['TL_LANG']['design']['ctaDesign'][$strName] ?> | <?= $objColor->title ?>', value:'<?= str_replace("{{ctaColor}}", $objColor->variable, $strDesign) ?>'},
+        {title: <?= json_encode($GLOBALS['TL_LANG']['design']['ctaDesign'][$strName] . ' | ' . $objColor->title) ?>, value: <?= json_encode(str_replace("{{ctaColor}}", $objColor->variable, $strDesign)) ?>},
         <?php endforeach;?>
         <?php endforeach;?>
       ],
@@ -266,9 +266,11 @@ if ($this->enableTinyMce):
 
   // Add Stimulus data and controller reference
   const target = document.querySelector('#<?= $this->selector ?>');
-  target.tinymceConfig = config;
-  target.setAttribute('data-action', 'turbo:before-visit@window->contao--tinymce#leave');
-  target.setAttribute('data-controller', 'contao--tinymce');
+  if (target) {
+    target.tinymceConfig = config;
+    target.setAttribute('data-action', 'turbo:before-visit@window->contao--tinymce#leave');
+    target.setAttribute('data-controller', 'contao--tinymce');
+  }
 }
 </script>
 <?php endif; ?>
