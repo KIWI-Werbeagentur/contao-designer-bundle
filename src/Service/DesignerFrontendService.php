@@ -4,6 +4,7 @@ namespace Kiwi\Contao\DesignerBundle\Service;
 
 use Contao\Database;
 use Contao\FilesModel;
+use Contao\FrontendTemplate;
 use Contao\Input;
 use Contao\LayoutModel;
 use Contao\StringUtil;
@@ -44,13 +45,18 @@ class DesignerFrontendService
                 break;
             case 'figure':
                 $objFigureBuilder = System::getContainer()->get('contao.image.studio')->createFigureBuilder();
-                $objFigureBuilder
-                    ->fromUuid($this->arrData['image'])
-                    ->setSize($this->arrData['size'] ?? null);
-                $figure = $objFigureBuilder->build();
-                $template = new \Contao\FrontendTemplate('image');
-                $figure->applyLegacyTemplateData($template);
-                $strValue = $template->parse();
+                try {
+                    $objFigureBuilder
+                        ->fromUuid($this->arrData['image'])
+                        ->setSize($this->arrData['size'] ?? null);
+                    $figure = $objFigureBuilder->build();
+                    $template = new FrontendTemplate('image');
+                    $figure->applyLegacyTemplateData($template);
+                    $strValue = $template->parse();
+                } catch (\Exception $e) {
+                    System::getContainer()->get('logger')->error($e->getMessage());
+                    $strValue = '';
+                }
                 break;
             case 'poster':
             case 'image':
