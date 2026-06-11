@@ -47,7 +47,7 @@ class ColorListener
     {
         $color = ColorHelper::getCssColorFromValue($row['value']);
 
-        return ['<div style="height:1em;width:1em;background-color:' . $color . '"></div>', $labels[1], '<span style="font-family:monospace">$' . $labels[2] . '</span>'];
+        return ['<div class="designer-color-swatch" style="--designer-swatch-color:' . $color . '"></div>', $labels[1], '<span class="designer-color-var">$' . $labels[2] . '</span>'];
     }
 
     public function valueSaveCallback(string $value, DataContainer $objDca): string

@@ -1,0 +1,18 @@
+/* Backend styles for the designer bundle.
+   Delivered into the Contao back end via $GLOBALS['TL_CSS'] in
+   src/EventListener/LoadDataContainerListener.php (asset package "kiwi_designer"). */
+
+.designer-color-swatch {
+  width: 1em;
+  height: 1em;
+  background-color: var(--designer-swatch-color);
+}
+
+.designer-color-var {
+  font-family: monospace;
+}
+
+/* prevent color previews from being inverted in dark mode */
+[data-color-scheme=dark] #pal_colors_legend .cmx--iconedSelect img {
+  filter: none;
+}
