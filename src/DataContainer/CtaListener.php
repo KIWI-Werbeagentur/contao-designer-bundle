@@ -36,6 +36,25 @@ class CtaListener
     }
 
     /**
+     * Records that predate the per-type CTA defaults carry the bare column default
+     * ('1') without ever having been initialized by presetCta. Those are recognizable
+     * by an empty ctaDesign: deliberately enabling the checkbox always persists the
+     * mandatory ctaDesign select. Present such records with their type default instead
+     * of the stale '1', so the next save stores the corrected value — no migration needed.
+     */
+    #[AsCallback(table: 'tl_content', target: 'fields.isCta.load')]
+    public function loadCta(mixed $varValue, DataContainer $objDca): mixed
+    {
+        $arrRecord = $objDca->getCurrentRecord();
+
+        if ($varValue === '1' && ($arrRecord['ctaDesign'] ?? '') === '') {
+            return \in_array($arrRecord['type'] ?? null, self::CTA_DEFAULT_OFF, true) ? '' : '1';
+        }
+
+        return $varValue;
+    }
+
+    /**
      * @return list<string> the types whose palette contains the isCta field
      */
     private function getCtaTypes(string $strTable): array
