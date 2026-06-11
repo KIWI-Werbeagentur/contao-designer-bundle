@@ -1,6 +1,7 @@
 {% extends "@Contao/content_element/_base.html.twig" %}
 
 {% set link_attributes = attrs().addClass(getCtaClasses(data)).mergeWith(link_attributes|default) %}
+{% set download_link_attributes = attrs().addClass(getCtaClasses(data)).mergeWith(download_link_attributes|default) %}
 
 {% set hl_attributes = headline.attributes|default(attrs()).addClass("#{container|default('main')}__headline headline").addClass(data.headlineClass ?? '') %}
 {% set headline = headline|default(_context)|merge({'attributes':hl_attributes}) %}
