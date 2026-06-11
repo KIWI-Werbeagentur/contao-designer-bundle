@@ -9,7 +9,6 @@ use Contao\LayoutModel;
 use Contao\StringUtil;
 use Contao\System;
 use Contao\ThemeModel;
-use Kiwi\Contao\DesignerBundle\DataContainer\CtaListener;
 use Kiwi\Contao\DesignerBundle\Models\ColorModel;
 use Kiwi\Contao\DesignerBundle\Models\ColorSchemeModel;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -107,14 +106,7 @@ class DesignerFrontendService
 
     public function getCtaClasses($arrData)
     {
-        $isCta = $this::getProp($arrData, 'isCta');
-
-        if ($isCta === CtaListener::UNSET_VALUE) {
-            $type = $this::getProp($arrData, 'type');
-            $isCta = \in_array($type, CtaListener::CTA_DEFAULT_OFF, true) ? '' : '1';
-        }
-
-        if (!$isCta) return "";
+        if (!($this::getProp($arrData, 'isCta') ?: false)) return "";
         return $this->getClasses($arrData, 'ctaDesign');
     }
 
