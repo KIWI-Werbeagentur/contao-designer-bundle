@@ -4,16 +4,32 @@ namespace Kiwi\Contao\DesignerBundle\EventListener;
 
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsHook;
-use Contao\Database;
-use Contao\StringUtil;
-use Contao\System;
+use Contao\CoreBundle\Routing\ScopeMatcher;
 use Kiwi\Contao\CmxBundle\DataContainer\PaletteManipulatorExtended;
+use Symfony\Component\Asset\Packages;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 #[AsHook('loadDataContainer')]
 class LoadDataContainerListener
 {
+    public function __construct(
+        private readonly Packages $packages,
+        private readonly ScopeMatcher $scopeMatcher,
+        private readonly RequestStack $requestStack,
+    ) {
+    }
+
     public function __invoke(string $strTable): void
     {
+        $request = $this->requestStack->getCurrentRequest();
+        if ($request && $this->scopeMatcher->isBackendRequest($request)) {
+            // keyed "kiwi-designer-backend.css" — cmx already occupies the "backend.css" key
+            $GLOBALS['TL_CSS']['kiwi-designer-backend.css'] = trim($this->packages->getUrl(
+                'backend.css',
+                'kiwi_designer',
+            ), '/');
+        }
+
         foreach ($GLOBALS['TL_DCA'][$strTable]['palettes'] ?? [] as $strPalette => $strFields) {
             if ($strPalette !== '__selector__' && PaletteManipulatorExtended::create()->hasField($strPalette, $strTable, 'headline')) {
                 PaletteManipulator::create()
