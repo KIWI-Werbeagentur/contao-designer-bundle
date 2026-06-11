@@ -3,7 +3,6 @@
 use Contao\Controller;
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
 use Contao\System;
-use Kiwi\Contao\DesignerBundle\DataContainer\CtaListener;
 use Kiwi\Contao\DesignerBundle\DataContainer\TemplateListener;
 
 System::loadLanguageFile('design');
@@ -14,8 +13,6 @@ Controller::loadDataContainer('design');
 $GLOBALS['TL_DCA']['tl_content']['fields'] += $GLOBALS['TL_DCA']['cta']['fields'];
 $GLOBALS['TL_DCA']['tl_content']['palettes']['__selector__'][] = 'isCta';
 $GLOBALS['TL_DCA']['tl_content']['subpalettes']['isCta'] = 'ctaColor,ctaDesign';
-$GLOBALS['TL_DCA']['tl_content']['config']['onbeforesubmit_callback'][] = [CtaListener::class, 'beforeSubmitCallback'];
-$GLOBALS['TL_DCA']['tl_content']['fields']['isCta']['load_callback'][] = [CtaListener::class, 'loadCallback'];
 
 
 $ctaField = PaletteManipulator::create()

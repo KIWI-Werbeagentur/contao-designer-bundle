@@ -12,7 +12,7 @@ $GLOBALS['TL_DCA']['cta']['fields'] = [
         'reference' => &$GLOBALS['TL_LANG']['design']['isCta'],
         'inputType' => 'checkbox',
         'eval' => ['submitOnChange' => true, 'tl_class' => 'clr m12'],
-        'sql' => "char(1) NOT NULL default '3'",
+        'sql' => "char(1) NOT NULL default '1'",
     ],
     'ctaColor' => [
         'label' => &$GLOBALS['TL_LANG']['design']['ctaColor'],
