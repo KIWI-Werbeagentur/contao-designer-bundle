@@ -13,6 +13,7 @@
 }
 
 /* prevent color previews from being inverted in dark mode */
+[data-color-scheme=dark] .cmx--iconedSelect:has([id*="color" i]) img,
 [data-color-scheme=dark] #pal_colors_legend .cmx--iconedSelect img {
   filter: none;
 }
