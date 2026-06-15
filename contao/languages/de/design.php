@@ -12,6 +12,9 @@ $GLOBALS['TL_LANG']['design']['ctaColor'] = [
     'CTA Farbe',
 ];
 
+// For TinyMCE
+$GLOBALS['TL_LANG']['design']['highlight'] = "Hervorheben";
+$GLOBALS['TL_LANG']['design']['displayAs'] = ['Anzeigen als', '(wird für SEO ignoriert)'];
 $GLOBALS['TL_LANG']['design']['ctaDesign'] = [
     'CTA Design',
     'link' => 'Textlink',

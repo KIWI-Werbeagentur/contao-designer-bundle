@@ -6,10 +6,12 @@ use Kiwi\Contao\DesignerBundle\Models\ColorModel;
 
 if ($this->enableTinyMce):
 
+Controller::loadLanguageFile('design', $this->tinyMceLanguage, true);
+
 ?>
 <style>
-  .tox-collection__item[title^="Heading"] .tox-collection__item-label,
-  .tox-collection__item[title^="Überschrift"] .tox-collection__item-label {
+  .tox-collection__item[aria-label^="Heading"] .tox-collection__item-label,
+  .tox-collection__item[aria-label^="Überschrift"] .tox-collection__item-label {
     font-family: sans-serif;
     font-weight: bold;
     font-style: normal;
@@ -23,33 +25,33 @@ if ($this->enableTinyMce):
     text-shadow: none;
   }
 
-  .tox-collection__item[title="Heading 1"] .tox-collection__item-label,
-  .tox-collection__item[title="Überschrift 1"] .tox-collection__item-label {
+  .tox-collection__item[aria-label="Heading 1"] .tox-collection__item-label,
+  .tox-collection__item[aria-label="Überschrift 1"] .tox-collection__item-label {
     font-size: 32px;
   }
 
-  .tox-collection__item[title="Heading 2"] .tox-collection__item-label,
-  .tox-collection__item[title="Überschrift 2"] .tox-collection__item-label {
+  .tox-collection__item[aria-label="Heading 2"] .tox-collection__item-label,
+  .tox-collection__item[aria-label="Überschrift 2"] .tox-collection__item-label {
     font-size: 24px;
   }
 
-  .tox-collection__item[title="Heading 3"] .tox-collection__item-label,
-  .tox-collection__item[title="Überschrift 3"] .tox-collection__item-label {
+  .tox-collection__item[aria-label="Heading 3"] .tox-collection__item-label,
+  .tox-collection__item[aria-label="Überschrift 3"] .tox-collection__item-label {
     font-size: 18.72px;
   }
 
-  .tox-collection__item[title="Heading 4"] .tox-collection__item-label,
-  .tox-collection__item[title="Überschrift 4"] .tox-collection__item-label {
+  .tox-collection__item[aria-label="Heading 4"] .tox-collection__item-label,
+  .tox-collection__item[aria-label="Überschrift 4"] .tox-collection__item-label {
     font-size: 16px;
   }
 
-  .tox-collection__item[title="Heading 5"] .tox-collection__item-label,
-  .tox-collection__item[title="Überschrift 5"] .tox-collection__item-label {
+  .tox-collection__item[aria-label="Heading 5"] .tox-collection__item-label,
+  .tox-collection__item[aria-label="Überschrift 5"] .tox-collection__item-label {
     font-size: 13.28px;
   }
 
-  .tox-collection__item[title="Heading 6"] .tox-collection__item-label,
-  .tox-collection__item[title="Überschrift 6"] .tox-collection__item-label {
+  .tox-collection__item[aria-label="Heading 6"] .tox-collection__item-label,
+  .tox-collection__item[aria-label="Überschrift 6"] .tox-collection__item-label {
     font-size: 10.72px;
   }
 </style>
@@ -72,8 +74,8 @@ if ($this->enableTinyMce):
       });
       editor.ui.registry.addButton('span', {
         icon: 'highlight-bg-color',
-        text: 'Hervorheben',
-        tooltip: '<?= $this->tinyMceLanguage == 'de' ? 'Hervorheben' : 'Highlight' ?>',
+        text: '<?= $GLOBALS['TL_LANG']['design']['highlight'] ?>',
+        tooltip: '<?= $GLOBALS['TL_LANG']['design']['highlight'] ?>',
         onAction: function () {
           var text = editor.selection.getContent({'format': 'html'});
           if (text && text.length > 0) {
@@ -82,8 +84,8 @@ if ($this->enableTinyMce):
         }
       });
       editor.ui.registry.addMenuButton('headingclassselect', {
-        text: '<?= $this->tinyMceLanguage == 'de' ? 'Anzeigen als': 'Display as' ?>',
-        tooltip: '<?= $this->tinyMceLanguage == 'de' ? '(wird für SEO ignoriert)' : '(ignored for SEO)' ?>',
+        text: '<?= $GLOBALS['TL_LANG']['design']['displayAs'][0] ?>',
+        tooltip: '<?= $GLOBALS['TL_LANG']['design']['displayAs'][1] ?>',
         fetch: (callback) => {
           const items = [
             <?php foreach ([1, 2, 3, 4, 5, 6] as $index) {
@@ -233,8 +235,6 @@ if ($this->enableTinyMce):
     <?php $this->block('custom'); ?>
       link_class_list: [
         {title: 'None', value: ''},
-        <?php Controller::loadLanguageFile('design'); ?>
-
         <?php foreach (ColorModel::findApplicable('cta') as $objColor):?>
         <?php foreach ($GLOBALS['design']['ctaDesign'] as $strName => $strDesign):?>
         {title: <?= json_encode($GLOBALS['TL_LANG']['design']['ctaDesign'][$strName] . ' | ' . $objColor->title) ?>, value: <?= json_encode(str_replace("{{ctaColor}}", $objColor->variable, $strDesign)) ?>},
@@ -250,7 +250,7 @@ if ($this->enableTinyMce):
       style_formats_merge: true,
       style_formats: [
         {
-          title: '<?= $this->tinyMceLanguage == 'de' ? 'Hervorheben' : 'Highlight' ?>', format: 'highlight'
+          title: '<?= $GLOBALS['TL_LANG']['design']['highlight'] ?>', format: 'highlight'
         }
       ],
       paste_as_text: true,
@@ -269,7 +269,7 @@ if ($this->enableTinyMce):
   if (target) {
     target.tinymceConfig = config;
     target.setAttribute('data-action', 'turbo:before-visit@window->contao--tinymce#leave');
-    target.setAttribute('data-controller', 'contao--tinymce');
+    target.setAttribute('data-controller', `${target.getAttribute('data-controller') || ''} contao--tinymce`.trim());
   }
 }
 </script>
