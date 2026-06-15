@@ -97,7 +97,6 @@ foreach ($GLOBALS['scheme']['fields'] ?? [] as $strField) {
     ];
 
     $GLOBALS['TL_DCA']['tl_color_scheme']['fields'][$strField . "Brightness"] = [
-        'label' => "",
         'inputType' => 'select',
         'options_callback' => function () {
             $arrOptions = [];
