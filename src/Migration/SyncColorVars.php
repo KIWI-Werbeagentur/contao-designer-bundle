@@ -23,6 +23,10 @@ class SyncColorVars extends AbstractMigration
 
     public function shouldRun(): bool
     {
+        if (getenv('DESIGNER_BUNDLE_COLOR_SYNC') === 'false') {
+            return false;
+        }
+
         if (!$this->connection->createSchemaManager()->tablesExist(['tl_color'])) {
             return false;
         }
@@ -34,8 +38,17 @@ class SyncColorVars extends AbstractMigration
             return true;
         }
 
-        return !empty(array_diff_key($dbColors, $scssColors));
+        if (!empty(array_diff_key($dbColors, $scssColors))) {
+            return true;
+        }
 
+        foreach ($scssColors as $variable => $value) {
+            if (isset($dbColors[$variable]) && $dbColors[$variable]['value'] !== $value) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public function run(): MigrationResult
@@ -57,6 +70,12 @@ class SyncColorVars extends AbstractMigration
                     'category' => serialize($categories)
                 ]);
                 $messages[] = "Added: $variable ($value)";
+            } elseif ($dbColors[$variable]['value'] !== $value) {
+                $this->connection->update('tl_color',
+                    ['value' => $value, 'tstamp' => time()],
+                    ['id' => $dbColors[$variable]['id']]
+                );
+                $messages[] = "Updated: $variable ({$dbColors[$variable]['value']} → $value)";
             }
         }
 
