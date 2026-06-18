@@ -6,6 +6,8 @@
 {% set hl_attributes = headline.attributes|default(attrs()).addClass("#{container|default('main')}__headline headline").addClass(data.headlineClass ?? '') %}
 {% set headline = headline|default(_context)|merge({'attributes':hl_attributes}) %}
 
+{% set content_main_attributes = attrs().addClass('content__main main').mergeWith(content_main_attributes|default) %}
+
 {% set content_attributes = content_attributes|default(attrs()).addClass("#{container|default('main')}__content").addClass(nested_fragments and not prevent_inner_classes|default ? inner_classes) %}
 {% set inner_classes = "" %}
 
@@ -36,7 +38,11 @@
         {% set headline_block = block('headline_component')|spaceless %}
 
         {% if content_block is not empty and headline_block is not empty %}
-            <div class="content__main main {{ main_class|default }}">
+            {% if main_class is defined and main_class is not empty %}
+                {% set content_main_attributes = attrs().addClass(main_class).mergeWith(content_main_attributes|default) %}
+                {% deprecated 'The "main_class" variable is deprecated, use "content_main_attributes" instead.' package='kiwi/contao-designer' version='1.1.19' %}
+            {% endif %}
+            <div {{ content_main_attributes|default }}>
                 {% if headline.text %}
                     {{ headline_block|raw }}
                 {% endif %}
