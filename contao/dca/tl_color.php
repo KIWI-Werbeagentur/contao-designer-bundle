@@ -52,7 +52,7 @@ $GLOBALS['TL_DCA']['tl_color'] = [
 
     'palettes' => [
         '__selector__' => ['isApplicable'],
-        'default' => 'title,isApplicable;variable,value,highlight',
+        'default' => '{title_legend},title;{availability_legend},isApplicable;{values_legend},variable,value,highlight',
     ],
     'subpalettes'=>[
         'isApplicable' => 'category',

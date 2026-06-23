@@ -1,32 +1,32 @@
 <?php
 
 $GLOBALS["TL_LANG"]["design"]["scheme"] = [
-    "Farbschema"
+    "Color scheme"
 ];
 
 $GLOBALS['TL_LANG']['design']['isCta'] = [
-    'Als CTA darstellen',
+    'Show as CTA',
 ];
 
 $GLOBALS['TL_LANG']['design']['ctaColor'] = [
-    'CTA Farbe',
+    'CTA color',
 ];
 
 // For TinyMCE
-$GLOBALS['TL_LANG']['design']['highlight'] = "Hervorheben";
-$GLOBALS['TL_LANG']['design']['displayAs'] = ['Anzeigen als', '(wird für SEO ignoriert)'];
+$GLOBALS['TL_LANG']['design']['highlight'] = 'Highlight';
+$GLOBALS['TL_LANG']['design']['displayAs'] = ['Display as', '(ignored for SEO)'];
 $GLOBALS['TL_LANG']['design']['ctaDesign'] = [
-    'CTA Design',
+    'CTA design',
     'options' => [
-        'link' => 'Textlink',
+        'link' => 'Text link',
         'btn' => 'Button',
         'btn-outline' => 'Button Outline',
     ],
 ];
 
 $GLOBALS['TL_LANG']['design']['headlineClass'] = [
-    'Überschrift-Stil',
-    'Im Stil einer anderen Überschrift-Klasse anzeigen',
+    'Headline class',
+    'Show as other headline class',
     'options' => [
         'display-1' => 'Display 1',
         'display-2' => 'Display 2',
@@ -44,21 +44,21 @@ $GLOBALS['TL_LANG']['design']['headlineClass'] = [
 ];
 
 $GLOBALS['TL_LANG']['design']['background'] = [
-    'Hintergrund',
+    'Background',
     'options' => [
-        'picture' => 'Bild',
+        'picture' => 'Image',
         'video' => 'Video',
-        'color' => 'Farbe',
-        'none' => 'Kein Hintergrund',
+        'color' => 'Color',
+        'none' => 'No background',
     ]
 ];
 
 $GLOBALS['TL_LANG']['design']['media'] = [
-    'Medium',
+    'Media',
 ];
 
 $GLOBALS['TL_LANG']['design']['color'] = [
-    'Farbe',
+    'Color',
 ];
 
 $GLOBALS['TL_LANG']['design']['poster'] = [
@@ -74,19 +74,19 @@ $GLOBALS['TL_LANG']['design']['subline'] = [
 ];
 
 $GLOBALS['TL_LANG']['design']['backgroundOverwrite'] = [
-    'Hintergrund dynamisch überschreiben',
+    'Overwrite background dynamically',
 ];
 
 $GLOBALS['TL_LANG']['design']['overwriteTable'] = [
-    'Tabelle',
+    'Table',
 ];
 
 $GLOBALS['TL_LANG']['design']['overwriteField'] = [
-    'Feld',
+    'Field',
 ];
 
 $GLOBALS['TL_LANG']['design']['overwriteParameter'] = [
     'Parameter',
 ];
 
-$GLOBALS['TL_LANG']['design']['scheme']['inherit'] = '- Zurücksetzen -';
+$GLOBALS['TL_LANG']['design']['scheme']['inherit'] = '- Inherit -';
