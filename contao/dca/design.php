@@ -8,7 +8,6 @@ use Kiwi\Contao\DesignerBundle\DataContainer\ColorSchemeListener;
 $GLOBALS['TL_DCA']['cta']['fields'] = [
     'isCta' => [
         'label' => &$GLOBALS['TL_LANG']['design']['isCta'],
-        'reference' => &$GLOBALS['TL_LANG']['design']['isCta'],
         'inputType' => 'checkbox',
         'eval' => ['submitOnChange' => true, 'tl_class' => 'clr m12'],
         'sql' => "char(1) NOT NULL default '1'",
@@ -24,7 +23,7 @@ $GLOBALS['TL_DCA']['cta']['fields'] = [
     ],
     'ctaDesign' => [
         'label' => &$GLOBALS['TL_LANG']['design']['ctaDesign'],
-        'reference' => &$GLOBALS['TL_LANG']['design']['ctaDesign'],
+        'reference' => &$GLOBALS['TL_LANG']['design']['ctaDesign']['options'],
         'inputType' => 'select',
         'options' => array_keys($GLOBALS['design']['ctaDesign']),
         'eval' => ['tl_class' => 'w50', 'mandatory' => true],

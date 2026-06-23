@@ -17,9 +17,11 @@ $GLOBALS['TL_LANG']['design']['highlight'] = "Hervorheben";
 $GLOBALS['TL_LANG']['design']['displayAs'] = ['Anzeigen als', '(wird für SEO ignoriert)'];
 $GLOBALS['TL_LANG']['design']['ctaDesign'] = [
     'CTA Design',
-    'link' => 'Textlink',
-    'btn' => 'Button',
-    'btn-outline' => 'Button Outline',
+    'options' => [
+        'link' => 'Textlink',
+        'btn' => 'Button',
+        'btn-outline' => 'Button Outline',
+    ],
 ];
 
 $GLOBALS['TL_LANG']['design']['headlineClass'] = [
