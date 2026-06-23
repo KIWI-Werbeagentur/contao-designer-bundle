@@ -2,10 +2,10 @@
 
 use Contao\Controller;
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
-use Kiwi\Contao\CmxBundle\DataContainer\PaletteManipulatorExtended;
+use Contao\System;
 use Kiwi\Contao\DesignerBundle\DataContainer\TemplateListener;
 
-\Contao\System::loadLanguageFile('design');
+System::loadLanguageFile('design');
 
 $GLOBALS['TL_DCA']['tl_content']['fields']['customTpl']['load_callback'][] = [TemplateListener::class, 'renameTemplates'];
 
@@ -14,9 +14,14 @@ $GLOBALS['TL_DCA']['tl_content']['fields'] += $GLOBALS['TL_DCA']['cta']['fields'
 $GLOBALS['TL_DCA']['tl_content']['palettes']['__selector__'][] = 'isCta';
 $GLOBALS['TL_DCA']['tl_content']['subpalettes']['isCta'] = 'ctaColor,ctaDesign';
 
-PaletteManipulator::create()
-    ->addField('isCta', 'template_legend', PaletteManipulator::POSITION_APPEND)
-    ->applyToPalette('hyperlink', 'tl_content');
+
+$ctaField = PaletteManipulator::create()
+    ->addField('isCta', 'template_legend', PaletteManipulator::POSITION_APPEND);
+
+foreach (['hyperlink', 'download', 'downloads'] as $palette) {
+    $ctaField->applyToPalette($palette, 'tl_content');
+}
+
 
 $GLOBALS['TL_DCA']['tl_content']['fields'] += $GLOBALS['TL_DCA']['headline']['fields'];
 
