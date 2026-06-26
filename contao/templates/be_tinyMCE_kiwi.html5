@@ -237,7 +237,7 @@ Controller::loadLanguageFile('design', $this->tinyMceLanguage, true);
         {title: 'None', value: ''},
         <?php foreach (ColorModel::findApplicable('cta') as $objColor):?>
         <?php foreach ($GLOBALS['design']['ctaDesign'] as $strName => $strDesign):?>
-        {title: <?= json_encode($GLOBALS['TL_LANG']['design']['ctaDesign'][$strName] . ' | ' . $objColor->title) ?>, value: <?= json_encode(str_replace("{{ctaColor}}", $objColor->variable, $strDesign)) ?>},
+        {title: <?= json_encode(($GLOBALS['TL_LANG']['design']['ctaDesign']['options'][$strName] ?? $strName) . ' | ' . $objColor->title) ?>, value: <?= json_encode(str_replace("{{ctaColor}}", $objColor->variable, $strDesign)) ?>},
         <?php endforeach;?>
         <?php endforeach;?>
       ],
