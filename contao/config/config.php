@@ -31,6 +31,7 @@ $GLOBALS['design']['scheme'] = "data-scheme{{modifier}}={{scheme}}";
 
 $GLOBALS['design']['color']['categories'] = [
     'cta',
+    'text',
     'background'
 ];
 

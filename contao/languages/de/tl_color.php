@@ -14,6 +14,7 @@ $GLOBALS['TL_LANG']['tl_color']['category'] = [
     "Wenn nichts ausgewählt wird, ist diese Farbe für alle Kategorien verfügbar.",
     'options' => [
         'cta' => 'CTA',
+        'text' => 'Text',
         'background' => 'Background',
     ]
 ];
