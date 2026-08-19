@@ -6,3 +6,9 @@
 
 {{ parent() }}
 {% endblock config %}
+
+{% block config_post_maps %}
+{{ parent() }}
+// Overwrite bootstrap colors with scheme colors, where applicable
+@import "_scheme";
+{% endblock %}

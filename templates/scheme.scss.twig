@@ -1,0 +1,11 @@
+{% for prop in props  %}
+{% if prop %}{{ '$' }}{{ prop }}{{ ':' }} map-get(map-get($schemes, '{{ scheme }}'), '{{ prop }}');{{ '\n' }}{% endif %}
+{% endfor %}
+
+{% for prop in props %}
+{% if prop %}
+@if map-get($theme-colors, '{{ prop }}') {
+  $theme-colors: map-merge($theme-colors, ("{{ prop }}": {{ '$' }}{{ prop }}));
+}
+{% endif %}
+{% endfor %}
