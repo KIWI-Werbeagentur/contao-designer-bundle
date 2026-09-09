@@ -54,7 +54,7 @@ class DesignerFrontendService
                     $figure->applyLegacyTemplateData($template);
                     $strValue = $template->parse();
                 } catch (\Exception $e) {
-                    System::getContainer()->get('logger')->error($e->getMessage());
+                    System::getContainer()->get('monolog.logger.contao')->error($e->getMessage());
                     $strValue = '';
                 }
                 break;
