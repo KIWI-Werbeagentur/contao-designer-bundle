@@ -5,7 +5,9 @@ services:
   kiwi.contao.designer.frontend:
     public: true
     class: Kiwi\Contao\DesignerBundle\Service\DesignerFrontendService
-  Kiwi\Contao\DesignerBundle\EventListener\ParseWidgetListener: ~
+  Kiwi\Contao\DesignerBundle\EventListener\LoadFormFieldListener:
+    arguments:
+      - '@kiwi.contao.designer.frontend'
   Kiwi\Contao\DesignerBundle\EventListener\GeneratePageListener: ~
   Kiwi\Contao\DesignerBundle\EventListener\AlterBootstrapImports: ~
   Kiwi\Contao\DesignerBundle\EventListener\LoadDataContainerListener: ~
