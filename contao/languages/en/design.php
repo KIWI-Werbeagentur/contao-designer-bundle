@@ -90,3 +90,8 @@ $GLOBALS['TL_LANG']['design']['overwriteParameter'] = [
 ];
 
 $GLOBALS['TL_LANG']['design']['scheme']['inherit'] = '- Inherit -';
+
+$GLOBALS['TL_LANG']['design']['sectionHeadlineClass'] = [
+    'Section headline class',
+    'Show the section headline as other headline class',
+];

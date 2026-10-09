@@ -21,6 +21,7 @@ class DesignerExtension extends AbstractExtension
             new TwigFunction('getColorVar', [$this->designerFrontendService, 'getColorVar']),
             new TwigFunction('getThemeAndLayout', [$this->designerFrontendService, 'getThemeAndLayout']),
             new TwigFunction('hasBackground', [$this->designerFrontendService, 'hasBackground']),
+            new TwigFunction('getSectionHeadlineClass', [$this->designerFrontendService, 'getSectionHeadlineClass']),
         ];
     }
 }
