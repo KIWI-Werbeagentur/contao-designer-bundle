@@ -22,6 +22,15 @@ PaletteManipulator::create()
 
 $GLOBALS['TL_DCA']['tl_content']['fields'] += $GLOBALS['TL_DCA']['headline']['fields'];
 
+// Non-semantic headlines (e.g. a visual title that must not affect the document outline)
+foreach (['headline', 'sectionHeadline'] as $strField) {
+    if (\is_array($GLOBALS['TL_DCA']['tl_content']['fields'][$strField]['options'] ?? null)
+        && !\in_array('div', $GLOBALS['TL_DCA']['tl_content']['fields'][$strField]['options'], true)
+    ) {
+        array_unshift($GLOBALS['TL_DCA']['tl_content']['fields'][$strField]['options'], 'div');
+    }
+}
+
 
 $GLOBALS['TL_DCA']['tl_content']['fields'] += $GLOBALS['TL_DCA']['background']['fields'];
 
