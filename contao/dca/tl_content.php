@@ -31,6 +31,17 @@ foreach (['headline', 'sectionHeadline'] as $strField) {
     }
 }
 
+// Section headlines (accordion, tabs, …) get the same visual class select as regular headlines.
+// The field is placed into the palettes by SectionHeadlineListener, because sectionHeadline itself
+// is only added by onpalette callbacks.
+$GLOBALS['TL_DCA']['tl_content']['fields']['sectionHeadlineClass'] = array_merge(
+    $GLOBALS['TL_DCA']['headline']['fields']['headlineClass'],
+    [
+        'label' => &$GLOBALS['TL_LANG']['design']['sectionHeadlineClass'],
+        'sql' => ['name' => 'sectionHeadlineClass', 'type' => 'string', 'default' => '', 'length' => 64, 'customSchemaOptions' => ['collation' => 'ascii_bin']],
+    ]
+);
+
 
 $GLOBALS['TL_DCA']['tl_content']['fields'] += $GLOBALS['TL_DCA']['background']['fields'];
 

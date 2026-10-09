@@ -2,6 +2,8 @@
 
 namespace Kiwi\Contao\DesignerBundle\Service;
 
+use Contao\ContentModel;
+use Contao\CoreBundle\Fragment\Reference\ContentElementReference;
 use Contao\Database;
 use Contao\FilesModel;
 use Contao\FrontendTemplate;
@@ -114,6 +116,25 @@ class DesignerFrontendService
     {
         if (!($this::getProp($arrData, 'isCta') ?: false)) return "";
         return $this->getClasses($arrData, 'ctaDesign');
+    }
+
+    /**
+     * The section headline is rendered by the parent element (e.g. the core accordion), which
+     * usually only knows its children as fragment references holding the model id. The models
+     * have already been loaded while building those references, so the lookup is served by the
+     * model registry.
+     */
+    public function getSectionHeadlineClass($varElement): string
+    {
+        if ($varElement instanceof ContentElementReference) {
+            $varElement = $varElement->getContentModel();
+        }
+
+        if (is_numeric($varElement)) {
+            $varElement = ContentModel::findById((int) $varElement);
+        }
+
+        return (string) $this::getProp($varElement, 'sectionHeadlineClass');
     }
 
     public function hasBackground($strBackground)
