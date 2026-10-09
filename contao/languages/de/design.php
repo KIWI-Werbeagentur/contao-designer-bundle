@@ -90,3 +90,8 @@ $GLOBALS['TL_LANG']['design']['overwriteParameter'] = [
 ];
 
 $GLOBALS['TL_LANG']['design']['scheme']['inherit'] = '- Zurücksetzen -';
+
+$GLOBALS['TL_LANG']['design']['sectionHeadlineClass'] = [
+    'Abschnittsüberschrift-Stil',
+    'Die Abschnittsüberschrift im Stil einer anderen Überschrift-Klasse anzeigen',
+];
