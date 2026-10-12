@@ -2,6 +2,8 @@
 
 namespace Kiwi\Contao\DesignerBundle\Service;
 
+use Contao\ContentModel;
+use Contao\CoreBundle\Fragment\Reference\ContentElementReference;
 use Contao\Database;
 use Contao\FilesModel;
 use Contao\FrontendTemplate;
@@ -54,7 +56,7 @@ class DesignerFrontendService
                     $figure->applyLegacyTemplateData($template);
                     $strValue = $template->parse();
                 } catch (\Exception $e) {
-                    System::getContainer()->get('logger')->error($e->getMessage());
+                    System::getContainer()->get('monolog.logger.contao')->error($e->getMessage());
                     $strValue = '';
                 }
                 break;
@@ -114,6 +116,46 @@ class DesignerFrontendService
     {
         if (!($this::getProp($arrData, 'isCta') ?: false)) return "";
         return $this->getClasses($arrData, 'ctaDesign');
+    }
+
+    /**
+     * The section headline is rendered by the parent element (e.g. the core accordion), which
+     * usually only knows its children as fragment references holding the model id. The models
+     * have already been loaded while building those references, so the lookup is served by the
+     * model registry.
+     */
+    public function getSectionHeadlineClass($varElement): string
+    {
+        if ($varElement instanceof ContentElementReference) {
+            $varElement = $varElement->getContentModel();
+        }
+
+        if (is_numeric($varElement)) {
+            $varElement = ContentModel::findById((int) $varElement);
+        }
+
+        return (string) $this::getProp($varElement, 'sectionHeadlineClass');
+    }
+
+    /**
+     * Normalizes a headline companion line (topline, subline) for rendering: its text, tag and
+     * style class, or null if it has no text. The lines are stored like the core headline (text +
+     * tag), see HeadlineLinesMigration.
+     */
+    public function getHeadlineLine($arrData, string $strField): ?array
+    {
+        $varValue = StringUtil::deserialize($this::getProp($arrData, $strField), true);
+        $strText = (string) ($varValue['value'] ?? '');
+
+        if ('' === trim($strText)) {
+            return null;
+        }
+
+        return [
+            'text' => $strText,
+            'tag_name' => ($varValue['unit'] ?? '') ?: ($GLOBALS['design'][$strField . 'Tag'][0] ?? 'div'),
+            'class' => (string) $this::getProp($arrData, $strField . 'Class'),
+        ];
     }
 
     public function hasBackground($strBackground)

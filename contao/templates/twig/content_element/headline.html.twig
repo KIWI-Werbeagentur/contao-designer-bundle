@@ -3,8 +3,8 @@
 
 {% block wrapper %}
     {% if headline.text is not empty
-        or data.topline is not empty
-        or data.subline is not empty
+        or getHeadlineLine(data, 'topline')
+        or getHeadlineLine(data, 'subline')
     %}
         {{ parent() }}
     {% endif %}

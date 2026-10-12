@@ -31,15 +31,13 @@ class LoadDataContainerListener
         }
 
         // tl_color_scheme has a "headline" field that is a color picker, not a headline text
-        // widget, so the topline/subline/headlineClass companion fields must not be injected here.
+        // widget, so the headline companion fields must not be injected here.
         if ($strTable !== 'tl_color_scheme') {
         foreach ($GLOBALS['TL_DCA'][$strTable]['palettes'] ?? [] as $strPalette => $strFields) {
             if ($strPalette !== '__selector__' && PaletteManipulatorExtended::create()->hasField($strPalette, $strTable, 'headline')) {
+                // headline | headlineClass, topline | toplineClass, subline | sublineClass
                 PaletteManipulator::create()
-                    ->addField(['topline','subline'], 'headline')
-                    ->applyToPalette($strPalette, $strTable);
-                PaletteManipulator::create()
-                    ->addField('headlineClass', 'headline')
+                    ->addField(['headlineClass', 'topline', 'toplineClass', 'subline', 'sublineClass'], 'headline')
                     ->applyToPalette($strPalette, $strTable);
             }
         }

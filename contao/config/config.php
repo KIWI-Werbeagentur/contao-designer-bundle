@@ -39,6 +39,12 @@ $GLOBALS['design']['tl_content']['background'] = ['element_group'];
 
 $GLOBALS['design']['headlineClass'] = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'display-1', 'display-2', 'display-3', 'display-4', 'display-5', 'display-6'];
 
+// Tags for the topline and subline; the first entry is the default for new content
+$GLOBALS['design']['toplineTag'] = ['div', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
+$GLOBALS['design']['sublineTag'] = ['div', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
+$GLOBALS['design']['toplineClass'] = $GLOBALS['design']['headlineClass'];
+$GLOBALS['design']['sublineClass'] = $GLOBALS['design']['headlineClass'];
+
 $GLOBALS['BE_MOD']['design']['color'] = [
     'tables' => ['tl_color'],
 ];

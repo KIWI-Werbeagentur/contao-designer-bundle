@@ -1,0 +1,14 @@
+{% extends '@Contao/content_element/accordion.html.twig' %}
+
+{#
+    The core accordion only hands over the section headline's text and tag, so the visual
+    class of each section is looked up from its element and passed through core's own
+    attributes hook.
+#}
+{% block element_header %}
+    {% set accordion_header_attributes = attrs()
+        .addClass(getSectionHeadlineClass(element.reference))
+        .mergeWith(accordion_header_attributes|default)
+    %}
+    {{ parent() }}
+{% endblock %}

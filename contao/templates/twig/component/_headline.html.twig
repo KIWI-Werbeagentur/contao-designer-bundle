@@ -1,5 +1,13 @@
 {% use "@Contao/component/_headline.html.twig" %}
 
+{#
+    Adds the topline and subline around the core headline.
+
+    Variables (besides the core ones):
+        @var array data                    the record holding topline/subline, their tag (unit) and class
+        @var Attributes topline_attributes optional, merged into the topline
+        @var Attributes subline_attributes optional, merged into the subline
+#}
 {% block headline_component %}
     {% set headlines_attributes = attrs()
         .addClass((container|default('main')) ~ '__headlines')
@@ -7,26 +15,30 @@
     %}
     <div{{ headlines_attributes }}>
         {% block topline %}
-            {% set topline_attributes = attrs()
-                .addClass((container|default('main')) ~ '__topline')
-                .addClass('topline')
-            %}
-            
-            {% if data.topline ?? false %}
-                <p{{ topline_attributes }}>{{ data.topline|insert_tag_raw }}</p>
+            {% set topline_line = getHeadlineLine(data|default({}), 'topline') %}
+            {% if topline_line %}
+                {% set topline_attributes = attrs()
+                    .addClass((container|default('main')) ~ '__topline')
+                    .addClass('topline')
+                    .addClass(topline_line.class)
+                    .mergeWith(topline_attributes|default)
+                %}
+                <{{ topline_line.tag_name }}{{ topline_attributes }}>{{ topline_line.text|insert_tag_raw }}</{{ topline_line.tag_name }}>
             {% endif %}
         {% endblock topline %}
-        
+
         {{ parent() }}
-        
+
         {% block subline %}
-            {% set subline_attributes = attrs()
-                .addClass((container|default('main')) ~ '__subline')
-                .addClass('subline')
-            %}
-            
-            {% if data.subline ?? false %}
-                <p{{ subline_attributes }}>{{ data.subline|insert_tag_raw }}</p>
+            {% set subline_line = getHeadlineLine(data|default({}), 'subline') %}
+            {% if subline_line %}
+                {% set subline_attributes = attrs()
+                    .addClass((container|default('main')) ~ '__subline')
+                    .addClass('subline')
+                    .addClass(subline_line.class)
+                    .mergeWith(subline_attributes|default)
+                %}
+                <{{ subline_line.tag_name }}{{ subline_attributes }}>{{ subline_line.text|insert_tag_raw }}</{{ subline_line.tag_name }}>
             {% endif %}
         {% endblock subline %}
     </div>
