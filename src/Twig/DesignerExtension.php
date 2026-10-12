@@ -22,6 +22,7 @@ class DesignerExtension extends AbstractExtension
             new TwigFunction('getThemeAndLayout', [$this->designerFrontendService, 'getThemeAndLayout']),
             new TwigFunction('hasBackground', [$this->designerFrontendService, 'hasBackground']),
             new TwigFunction('getSectionHeadlineClass', [$this->designerFrontendService, 'getSectionHeadlineClass']),
+            new TwigFunction('getHeadlineLine', [$this->designerFrontendService, 'getHeadlineLine']),
         ];
     }
 }

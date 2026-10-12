@@ -18,6 +18,7 @@ services:
     tags:
       - 'twig.extension'
   Kiwi\Contao\DesignerBundle\Migration\SyncColorVars: ~
+  Kiwi\Contao\DesignerBundle\Migration\HeadlineLinesMigration: ~
   Kiwi\Contao\DesignerBundle\DataContainer\ColorSchemeListener: ~
   Kiwi\Contao\DesignerBundle\DataContainer\CtaListener: ~
   Kiwi\Contao\DesignerBundle\DataContainer\SectionHeadlineListener: ~

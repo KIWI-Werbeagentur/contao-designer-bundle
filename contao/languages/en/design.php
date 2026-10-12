@@ -67,10 +67,22 @@ $GLOBALS['TL_LANG']['design']['poster'] = [
 
 $GLOBALS['TL_LANG']['design']['topline'] = [
     'Topline',
+    'Add a topline that is displayed above the headline.'
+];
+
+$GLOBALS['TL_LANG']['design']['toplineClass'] = [
+    'Topline class',
+    'Display the topline using the style of another headline class',
 ];
 
 $GLOBALS['TL_LANG']['design']['subline'] = [
     'Subline',
+    'Add a subline that is displayed below the headline.'
+];
+
+$GLOBALS['TL_LANG']['design']['sublineClass'] = [
+    'Subline class',
+    'Display the subline using the style of another headline class',
 ];
 
 $GLOBALS['TL_LANG']['design']['backgroundOverwrite'] = [
@@ -93,5 +105,5 @@ $GLOBALS['TL_LANG']['design']['scheme']['inherit'] = '- Inherit -';
 
 $GLOBALS['TL_LANG']['design']['sectionHeadlineClass'] = [
     'Section headline class',
-    'Show the section headline as other headline class',
+    'Display the section headline using the style of another headline class',
 ];

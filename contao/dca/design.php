@@ -191,9 +191,19 @@ $GLOBALS['TL_DCA']['headline']['fields'] = [
     'topline' => [
         'label' => &$GLOBALS['TL_LANG']['design']['topline'],
         'search' => true,
-        'inputType' => 'text',
-        'eval' => ['maxlength' => 255, 'tl_class' => 'clr w50'],
+        'inputType' => 'inputUnit',
+        'options' => &$GLOBALS['design']['toplineTag'],
+        'eval' => ['maxlength' => 200, 'tl_class' => 'clr w50'],
+        // Stored like the core headline (text + tag); an empty value preselects the first configured tag
         'sql' => "varchar(255) NOT NULL default ''"
+    ],
+    'toplineClass' => [
+        'label' => &$GLOBALS['TL_LANG']['design']['toplineClass'],
+        'inputType' => 'select',
+        'options' => &$GLOBALS['design']['toplineClass'],
+        'reference' => &$GLOBALS['TL_LANG']['design']['headlineClass']['options'],
+        'eval' => ['includeBlankOption' => true, 'tl_class' => 'w50'],
+        'sql' => ['name' => 'toplineClass', 'type' => 'string', 'default' => '', 'length' => 64, 'customSchemaOptions' => ['collation' => 'ascii_bin']]
     ],
     'headlineClass' => [
         'label' => &$GLOBALS['TL_LANG']['design']['headlineClass'],
@@ -205,8 +215,19 @@ $GLOBALS['TL_DCA']['headline']['fields'] = [
     ],
     'subline' => [
         'label' => &$GLOBALS['TL_LANG']['design']['subline'],
-        'inputType' => 'text',
-        'eval' => ['maxlength' => 255, 'tl_class' => 'w50'],
+        'search' => true,
+        'inputType' => 'inputUnit',
+        'options' => &$GLOBALS['design']['sublineTag'],
+        'eval' => ['maxlength' => 200, 'tl_class' => 'clr w50'],
+        // Stored like the core headline (text + tag); an empty value preselects the first configured tag
         'sql' => "varchar(255) NOT NULL default ''"
+    ],
+    'sublineClass' => [
+        'label' => &$GLOBALS['TL_LANG']['design']['sublineClass'],
+        'inputType' => 'select',
+        'options' => &$GLOBALS['design']['sublineClass'],
+        'reference' => &$GLOBALS['TL_LANG']['design']['headlineClass']['options'],
+        'eval' => ['includeBlankOption' => true, 'tl_class' => 'w50'],
+        'sql' => ['name' => 'sublineClass', 'type' => 'string', 'default' => '', 'length' => 64, 'customSchemaOptions' => ['collation' => 'ascii_bin']]
     ]
 ];

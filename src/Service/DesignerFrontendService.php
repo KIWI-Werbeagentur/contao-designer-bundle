@@ -137,6 +137,27 @@ class DesignerFrontendService
         return (string) $this::getProp($varElement, 'sectionHeadlineClass');
     }
 
+    /**
+     * Normalizes a headline companion line (topline, subline) for rendering: its text, tag and
+     * style class, or null if it has no text. The lines are stored like the core headline (text +
+     * tag), see HeadlineLinesMigration.
+     */
+    public function getHeadlineLine($arrData, string $strField): ?array
+    {
+        $varValue = StringUtil::deserialize($this::getProp($arrData, $strField), true);
+        $strText = (string) ($varValue['value'] ?? '');
+
+        if ('' === trim($strText)) {
+            return null;
+        }
+
+        return [
+            'text' => $strText,
+            'tag_name' => ($varValue['unit'] ?? '') ?: ($GLOBALS['design'][$strField . 'Tag'][0] ?? 'div'),
+            'class' => (string) $this::getProp($arrData, $strField . 'Class'),
+        ];
+    }
+
     public function hasBackground($strBackground)
     {
         $arrBackgrounds = StringUtil::deserialize($strBackground, true);

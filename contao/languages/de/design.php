@@ -67,10 +67,22 @@ $GLOBALS['TL_LANG']['design']['poster'] = [
 
 $GLOBALS['TL_LANG']['design']['topline'] = [
     'Topline',
+    'Topline hinzufügen, die über der Überschrift ausgegeben wird.'
+];
+
+$GLOBALS['TL_LANG']['design']['toplineClass'] = [
+    'Topline-Stil',
+    'Die Topline im Stil einer anderen Überschrift-Klasse anzeigen',
 ];
 
 $GLOBALS['TL_LANG']['design']['subline'] = [
     'Subline',
+    'Subline hinzufügen, die unter der Überschrift ausgegeben wird.'
+];
+
+$GLOBALS['TL_LANG']['design']['sublineClass'] = [
+    'Subline-Stil',
+    'Die Subline im Stil einer anderen Überschrift-Klasse anzeigen',
 ];
 
 $GLOBALS['TL_LANG']['design']['backgroundOverwrite'] = [
