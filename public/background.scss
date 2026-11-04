@@ -15,6 +15,27 @@
       &--color {
         background-color: var(--background-color);
       }
+
+      &__blur {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+
+        img {
+          filter: blur(var(--background-blur-radius, 24px)) brightness(var(--background-blur-brightness, 1));
+          transform: scale(1.08);
+        }
+      }
+
+      &__figure--limited {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        max-width: min(100%, calc(var(--container-width, 1296px) + 2 * var(--background-figure-gap, 3rem)));
+      }
     }
   }
 
@@ -29,7 +50,7 @@
   .mod_article &--article {
     .background {
       &__element {
-        width: var(--page-max, 100vw);
+        width: var(--page-bleed, var(--page-max, 100vw));
       }
     }
   }
