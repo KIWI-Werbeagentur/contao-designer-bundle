@@ -59,6 +59,10 @@ class DesignerFrontendService
                     System::getContainer()->get('monolog.logger.contao')->error($e->getMessage());
                     $strValue = '';
                 }
+                if ($strValue && !empty($this->arrData['backgroundLimitWidth'])) {
+                    $strBlur = empty($this->arrData['backgroundBlur']) ? '' : sprintf("<div class='background__element__blur' aria-hidden='true' style='--background-blur-brightness:%s'>%s</div>", (int) (($this->arrData['backgroundBrightness'] ?? 0) ?: 100) / 100, $strValue);
+                    $strValue = $strBlur . "<div class='background__element__figure--limited'>$strValue</div>";
+                }
                 break;
             case 'poster':
             case 'image':
