@@ -17,3 +17,10 @@
 [data-color-scheme=dark] #pal_colors_legend .cmx--iconedSelect img {
   filter: none;
 }
+
+.responsive-widget__item:has(input[type="checkbox"][name*="-backgroundLimitWidth"]:not(:checked)) :is([id^="ctrl_"][id*="-backgroundBlur"], [id^="ctrl_"][id*="-backgroundBrightness"]),
+.responsive-widget__item:has(input[type="checkbox"][name*="-backgroundLimitWidth"]:not(:checked)) :is(h3, h4):has(+ :is([id^="ctrl_"][id*="-backgroundBlur"], [id^="ctrl_"][id*="-backgroundBrightness"])),
+.responsive-widget__item:has(input[type="checkbox"][name*="-backgroundBlur"]:not(:checked)) [id^="ctrl_"][id*="-backgroundBrightness"],
+.responsive-widget__item:has(input[type="checkbox"][name*="-backgroundBlur"]:not(:checked)) :is(h3, h4):has(+ [id^="ctrl_"][id*="-backgroundBrightness"]) {
+  display: none;
+}
