@@ -66,6 +66,7 @@ $arrBackground = ($GLOBALS['responsive'] ?? false) ?
                         'inputType' => 'fileTree',
                         'eval' => ['filesOnly' => true, 'fieldType' => 'radio', 'mandatory' => true, 'tl_class' => 'clr'],
                     ],
+                    'posterSize' => 'size',
                 ],
             ],
             'sql' => "blob NULL"

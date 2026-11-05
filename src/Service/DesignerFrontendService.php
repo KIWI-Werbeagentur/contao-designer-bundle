@@ -14,6 +14,7 @@ use Contao\System;
 use Contao\ThemeModel;
 use Kiwi\Contao\DesignerBundle\Models\ColorModel;
 use Kiwi\Contao\DesignerBundle\Models\ColorSchemeModel;
+use Symfony\Component\Filesystem\Path;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class DesignerFrontendService
@@ -61,10 +62,14 @@ class DesignerFrontendService
                 }
                 break;
             case 'poster':
+                $strValue = $this->getPosterSrc($strValue);
+                break;
+            case 'video':
+                $strValue = $this->getVersionedPath($strValue);
+                break;
             case 'image':
             case 'file':
             case 'picture':
-            case 'video':
             case 'audio':
                 $strValue = FilesModel::findByPk($strValue)?->path ?? '';
                 break;
@@ -87,6 +92,54 @@ class DesignerFrontendService
                 System::importStatic($callback[0])->{$callback[1]}($strName, $strValue, $this->arrData);
             }
         }
+    }
+
+    /**
+     * Resizes the poster through the image studio when a poster size is set, so it is served
+     * as a cacheable asset. Without a size the original file path is returned as before.
+     */
+    protected function getPosterSrc($varUuid): string
+    {
+        $objFile = FilesModel::findByPk($varUuid);
+
+        if (null === $objFile) {
+            return '';
+        }
+
+        if (!array_filter(StringUtil::deserialize($this::getProp($this->arrData, 'posterSize'), true))) {
+            return $objFile->path;
+        }
+
+        try {
+            return System::getContainer()->get('contao.image.studio')
+                ->createFigureBuilder()
+                ->fromFilesModel($objFile)
+                ->setSize($this::getProp($this->arrData, 'posterSize'))
+                ->build()
+                ->getImage()
+                ->getImageSrc();
+        } catch (\Exception $e) {
+            System::getContainer()->get('monolog.logger.contao')->error($e->getMessage());
+
+            return $objFile->path;
+        }
+    }
+
+    /**
+     * Appends a ?v= cache-busting parameter derived from the file's mtime, like Contao does for
+     * layout scripts and stylesheets, so the file can be cached long-term and still refreshes
+     * when it is replaced.
+     */
+    protected function getVersionedPath($varUuid): string
+    {
+        $strPath = FilesModel::findByPk($varUuid)?->path ?? '';
+        $strFile = Path::join(System::getContainer()->getParameter('kernel.project_dir'), $strPath);
+
+        if ('' !== $strPath && is_file($strFile)) {
+            $strPath .= '?v=' . substr(md5((string) filemtime($strFile)), 0, 8);
+        }
+
+        return $strPath;
     }
 
     public function getClasses($arrData, $strMapping, $strField = "")
