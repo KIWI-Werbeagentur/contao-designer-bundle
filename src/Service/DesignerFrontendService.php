@@ -111,13 +111,26 @@ class DesignerFrontendService
         }
 
         try {
-            return System::getContainer()->get('contao.image.studio')
+            $objImage = System::getContainer()->get('contao.image.studio')
                 ->createFigureBuilder()
                 ->fromFilesModel($objFile)
                 ->setSize($this::getProp($this->arrData, 'posterSize'))
                 ->build()
-                ->getImage()
-                ->getImageSrc();
+                ->getImage();
+
+            // A poster can only hold a single URL, so the format conversions of the image size
+            // (only output as additional <source> elements) would never be used. Prefer the WebP
+            // version of the base size if there is one: supported by all current browsers, so it
+            // is safe without a fallback (unlike AVIF). Sources with a media query belong to the
+            // responsive variants of the size and are skipped. Without a WebP conversion, the
+            // result is the same as before.
+            foreach ($objImage->getSources() as $arrSource) {
+                if (empty($arrSource['media']) && 'image/webp' === ($arrSource['type'] ?? null) && !empty($arrSource['src'])) {
+                    return $arrSource['src'];
+                }
+            }
+
+            return $objImage->getImageSrc();
         } catch (\Exception $e) {
             System::getContainer()->get('monolog.logger.contao')->error($e->getMessage());
 
