@@ -1,3 +1,15 @@
+// Full-bleed backgrounds are 100vw wide, which includes a classic vertical scrollbar, so they
+// overhang the page by half its width and cause horizontal scrolling. Clip that on body, the only
+// element that always spans the page (#wrapper may be boxed, e.g. by a static layout).
+// - clip, never hidden: hidden turns body into a scroll container once html has an overflow set,
+//   which breaks sticky elements; clip never creates one
+// - this affects the whole page: anything wider than the page is cut off, not scrollable, so wide
+//   content (tables, embeds) needs its own overflow-x: auto wrapper
+// - :where() keeps the specificity at zero; opt out with `body { overflow-x: visible; }`
+:where(body) {
+  overflow-x: clip;
+}
+
 .background {
   height: 100%;
   width: 100%;
