@@ -17,10 +17,20 @@
   top: 0;
   z-index: -1;
 
+  // Widths themes can set (all optional):
+  // --background-element-width        content element backgrounds, default: the element's own box
+  // --background-article-width        article backgrounds, default: --page-max, else the viewport
+  // --background-limit-min-width      "limit width": min. width of the sharp picture, default: none
+  // --background-limit-max-width      "limit width": max. width of the sharp picture, default: none
+  // --background-limit-width          shorthand for both; the specific variables take precedence
+  // Without the limit variables the sharp picture keeps its own proportions at full height (if the
+  // image dimensions are known), so it is never cropped at the top or bottom; on backgrounds
+  // narrower than that, it fills the width and crops at the sides. Without known dimensions it
+  // fills the width. Set the shorthand (e.g. content width + gap) to always fill exactly that width.
   .background {
     &__element {
       height: 100%;
-      width: var(--page-max, 100%);
+      width: var(--background-element-width, 100%);
       margin-left: 50%;
       transform: translateX(-50%);
 
@@ -28,33 +38,42 @@
         background-color: var(--background-color);
       }
 
-      &__blur {
-        position: absolute;
-        inset: 0;
-        overflow: hidden;
-
-        // the blur fades the image edges to transparent over about 3x its radius: overhang the
-        // clipped box by that much so the visible edges stay opaque
-        figure {
-          position: absolute;
-          inset: calc(var(--background-blur-radius, 24px) * -3);
-          width: auto;
-          height: auto;
-        }
-
-        img {
-          filter: blur(var(--background-blur-radius, 24px)) brightness(var(--background-blur-brightness, 1));
-        }
-      }
-
-      &__figure--limited {
+      // "limit width": the sharp picture (--limited), optionally above a blurred copy (--blurred)
+      &__layer {
         position: absolute;
         top: 0;
         bottom: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 100%;
-        max-width: min(100%, calc(var(--container-width, 1296px) + 2 * var(--background-figure-gap, 3rem)));
+
+        &--blurred {
+          left: 0;
+          right: 0;
+          overflow: hidden;
+
+          // the blur fades the image edges to transparent over about 3x its radius: overhang the
+          // clipped box by that much so the visible edges stay opaque
+          figure {
+            position: absolute;
+            inset: calc(var(--background-blur-radius, 24px) * -3);
+            width: auto;
+            height: auto;
+          }
+
+          img {
+            filter: blur(var(--background-blur-radius, 24px)) brightness(var(--background-blur-brightness, 1));
+          }
+        }
+
+        &--limited {
+          left: 50%;
+          transform: translateX(-50%);
+          // width from the height and the image proportions (set inline); without them, a very wide
+          // ratio makes the picture fill the clamped width. width: auto is required for aspect-ratio
+          // to apply (and beats themes setting a width on all descendants)
+          width: auto;
+          aspect-ratio: var(--background-image-ratio, 100);
+          min-width: min(100%, var(--background-limit-min-width, var(--background-limit-width, 0px)));
+          max-width: min(100%, var(--background-limit-max-width, var(--background-limit-width, 100%)));
+        }
       }
     }
   }
@@ -70,7 +89,7 @@
   .mod_article &--article {
     .background {
       &__element {
-        width: var(--page-bleed, var(--page-max, 100vw));
+        width: var(--background-article-width, var(--page-max, 100vw));
       }
     }
   }
