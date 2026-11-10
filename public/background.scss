@@ -33,9 +33,17 @@
         inset: 0;
         overflow: hidden;
 
+        // the blur fades the image edges to transparent over about 3x its radius: overhang the
+        // clipped box by that much so the visible edges stay opaque
+        figure {
+          position: absolute;
+          inset: calc(var(--background-blur-radius, 24px) * -3);
+          width: auto;
+          height: auto;
+        }
+
         img {
           filter: blur(var(--background-blur-radius, 24px)) brightness(var(--background-blur-brightness, 1));
-          transform: scale(1.08);
         }
       }
 
