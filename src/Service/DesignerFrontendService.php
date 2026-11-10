@@ -39,12 +39,20 @@ class DesignerFrontendService
             case 'ctaColor':
                 $strValue = ColorModel::findByPk($strValue)->variable ?? $strValue;
                 break;
+            case 'modifier':
+                // breakpoint suffix, e.g. of data-scheme{{modifier}}; set by kiwi/contao-responsive-base
+                // (which resolves after this), empty without it
+                $strValue = '';
+                break;
             case 'scheme':
-                if ('inherit' === $this->arrData) {
+                // kiwi/contao-responsive-base passes the scheme of one breakpoint as data (the
+                // placeholder then resolves to nothing), otherwise it is the record's field value
+                $varScheme = \is_scalar($this->arrData) ? $this->arrData : $strValue;
+                if ('inherit' === $varScheme) {
                     $strValue = 'inherit';
                     break;
                 }
-                $strValue = ColorSchemeModel::findByPk($this->arrData)->alias ?? 'inherit';
+                $strValue = ColorSchemeModel::findByPk($varScheme)->alias ?? 'inherit';
                 break;
             case 'figure':
                 $objFigureBuilder = System::getContainer()->get('contao.image.studio')->createFigureBuilder();
