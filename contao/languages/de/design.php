@@ -66,8 +66,8 @@ $GLOBALS['TL_LANG']['design']['poster'] = [
 ];
 
 $GLOBALS['TL_LANG']['design']['backgroundLimitWidth'] = ['Bildbreite begrenzen', 'Z. B. für Bilder mit Personen.'];
-$GLOBALS['TL_LANG']['design']['backgroundBlur'] = ['Geblurte Variante über die volle Breite'];
-$GLOBALS['TL_LANG']['design']['backgroundBrightness'] = ['Helligkeit der geblurten Variante (%)', '100 = unverändert'];
+$GLOBALS['TL_LANG']['design']['backgroundBlur'] = ['Seiten unscharf auffüllen', 'Füllt die Fläche neben dem Bild mit einer weichgezeichneten Kopie.'];
+$GLOBALS['TL_LANG']['design']['backgroundBrightness'] = ['Helligkeit der Kopie (%)', '100 = unverändert, kleiner = dunkler, größer = heller'];
 
 $GLOBALS['TL_LANG']['design']['topline'] = [
     'Topline',
