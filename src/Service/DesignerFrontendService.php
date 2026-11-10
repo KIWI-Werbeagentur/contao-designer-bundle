@@ -4,6 +4,7 @@ namespace Kiwi\Contao\DesignerBundle\Service;
 
 use Contao\ContentModel;
 use Contao\CoreBundle\Fragment\Reference\ContentElementReference;
+use Contao\CoreBundle\Routing\ResponseContext\Csp\CspHandler;
 use Contao\Database;
 use Contao\FilesModel;
 use Contao\FrontendTemplate;
@@ -47,6 +48,7 @@ class DesignerFrontendService
                 break;
             case 'figure':
                 $objFigureBuilder = System::getContainer()->get('contao.image.studio')->createFigureBuilder();
+                $strRatio = '';
                 try {
                     $objFigureBuilder
                         ->fromUuid($this->arrData['image'])
@@ -55,9 +57,19 @@ class DesignerFrontendService
                     $template = new FrontendTemplate('image');
                     $figure->applyLegacyTemplateData($template);
                     $strValue = $template->parse();
+
+                    // the limited picture is sized from the image proportions (see background.scss)
+                    $arrImg = $figure->getImage()->getImg();
+                    if (($intWidth = (int) ($arrImg['width'] ?? 0)) && ($intHeight = (int) ($arrImg['height'] ?? 0))) {
+                        $strRatio = "--background-image-ratio:$intWidth / $intHeight";
+                    }
                 } catch (\Exception $e) {
                     System::getContainer()->get('monolog.logger.contao')->error($e->getMessage());
                     $strValue = '';
+                }
+                if ($strValue && !empty($this->arrData['backgroundLimitWidth'])) {
+                    $strBlur = empty($this->arrData['backgroundBlur']) ? '' : sprintf("<div class='background__element__layer background__element__layer--blurred' aria-hidden='true' style='--background-blur-brightness:%s'>%s</div>", (int) (($this->arrData['backgroundBrightness'] ?? 0) ?: 100) / 100, $strValue);
+                    $strValue = $strBlur . "<div class='background__element__layer background__element__layer--limited' style='$strRatio'>$strValue</div>";
                 }
                 break;
             case 'poster':

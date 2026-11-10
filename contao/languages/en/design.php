@@ -65,6 +65,10 @@ $GLOBALS['TL_LANG']['design']['poster'] = [
     'Poster',
 ];
 
+$GLOBALS['TL_LANG']['design']['backgroundLimitWidth'] = ['Limit image width', 'E.g. for images of people.'];
+$GLOBALS['TL_LANG']['design']['backgroundBlur'] = ['Fill sides with blurred image', 'Fills the space next to the image with a blurred copy.'];
+$GLOBALS['TL_LANG']['design']['backgroundBrightness'] = ['Brightness of the fill (%)', '100 = unchanged, lower = darker, higher = brighter'];
+
 $GLOBALS['TL_LANG']['design']['topline'] = [
     'Topline',
 ];
