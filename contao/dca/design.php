@@ -57,7 +57,10 @@ $arrBackground = ($GLOBALS['responsive'] ?? false) ?
                 ],
                 'picture' => [
                     'image' => 'media',
-                    'size'  => 'size'
+                    'size'  => 'size',
+                    'backgroundLimitWidth' => 'backgroundLimitWidth',
+                    'backgroundBlur' => 'backgroundBlur',
+                    'backgroundBrightness' => 'backgroundBrightness'
                 ],
                 'video' => [
                     'video' => 'media',
@@ -135,6 +138,21 @@ $GLOBALS['TL_DCA']['background']['fields'] =
             'icon_callback' => [ColorListener::class, 'getIcons'],
             'category' => 'background',
             'eval' => ['tl_class' => 'clr w50', 'mandatory' => true]
+        ],
+        'backgroundLimitWidth' => [
+            'label' => &$GLOBALS['TL_LANG']['design']['backgroundLimitWidth'],
+            'inputType' => 'checkbox',
+            'eval' => ['tl_class' => 'w50 clr']
+        ],
+        'backgroundBlur' => [
+            'label' => &$GLOBALS['TL_LANG']['design']['backgroundBlur'],
+            'inputType' => 'checkbox',
+            'eval' => ['tl_class' => 'w50']
+        ],
+        'backgroundBrightness' => [
+            'label' => &$GLOBALS['TL_LANG']['design']['backgroundBrightness'],
+            'inputType' => 'text',
+            'eval' => ['rgxp' => 'natural', 'maxlength' => 3, 'tl_class' => 'w50', 'placeholder' => '100']
         ],
         'backgroundOverwrite' => [
             'label' => &$GLOBALS['TL_LANG']['design']['backgroundOverwrite'],

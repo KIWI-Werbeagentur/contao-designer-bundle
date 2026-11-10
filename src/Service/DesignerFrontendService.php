@@ -4,6 +4,7 @@ namespace Kiwi\Contao\DesignerBundle\Service;
 
 use Contao\ContentModel;
 use Contao\CoreBundle\Fragment\Reference\ContentElementReference;
+use Contao\CoreBundle\Routing\ResponseContext\Csp\CspHandler;
 use Contao\Database;
 use Contao\FilesModel;
 use Contao\FrontendTemplate;
@@ -39,15 +40,24 @@ class DesignerFrontendService
             case 'ctaColor':
                 $strValue = ColorModel::findByPk($strValue)->variable ?? $strValue;
                 break;
+            case 'modifier':
+                // breakpoint suffix, e.g. of data-scheme{{modifier}}; set by kiwi/contao-responsive-base
+                // (which resolves after this), empty without it
+                $strValue = '';
+                break;
             case 'scheme':
-                if ('inherit' === $this->arrData) {
+                // kiwi/contao-responsive-base passes the scheme of one breakpoint as data (the
+                // placeholder then resolves to nothing), otherwise it is the record's field value
+                $varScheme = \is_scalar($this->arrData) ? $this->arrData : $strValue;
+                if ('inherit' === $varScheme) {
                     $strValue = 'inherit';
                     break;
                 }
-                $strValue = ColorSchemeModel::findByPk($this->arrData)->alias ?? 'inherit';
+                $strValue = ColorSchemeModel::findByPk($varScheme)->alias ?? 'inherit';
                 break;
             case 'figure':
                 $objFigureBuilder = System::getContainer()->get('contao.image.studio')->createFigureBuilder();
+                $strRatio = '';
                 try {
                     $objFigureBuilder
                         ->fromUuid($this->arrData['image'])
@@ -56,9 +66,19 @@ class DesignerFrontendService
                     $template = new FrontendTemplate('image');
                     $figure->applyLegacyTemplateData($template);
                     $strValue = $template->parse();
+
+                    // the limited picture is sized from the image proportions (see background.scss)
+                    $arrImg = $figure->getImage()->getImg();
+                    if (($intWidth = (int) ($arrImg['width'] ?? 0)) && ($intHeight = (int) ($arrImg['height'] ?? 0))) {
+                        $strRatio = "--background-image-ratio:$intWidth / $intHeight";
+                    }
                 } catch (\Exception $e) {
                     System::getContainer()->get('monolog.logger.contao')->error($e->getMessage());
                     $strValue = '';
+                }
+                if ($strValue && !empty($this->arrData['backgroundLimitWidth'])) {
+                    $strBlur = empty($this->arrData['backgroundBlur']) ? '' : sprintf("<div class='background__element__layer background__element__layer--blurred' aria-hidden='true' style='--background-blur-brightness:%s'>%s</div>", (int) (($this->arrData['backgroundBrightness'] ?? 0) ?: 100) / 100, $strValue);
+                    $strValue = $strBlur . "<div class='background__element__layer background__element__layer--limited' style='$strRatio'>$strValue</div>";
                 }
                 break;
             case 'poster':
@@ -167,15 +187,50 @@ class DesignerFrontendService
         }
 
         if ($strClass) {
-            return preg_replace_callback('/\{{(\w+)}}/', function ($match) use ($arrData) {
+            $strResult = preg_replace_callback('/\{{(\w+)}}/', function ($match) use ($arrData) {
                 $matched = $match[0];
                 $strName = $match[1];
                 $strValue = $this::getProp($arrData, $strName) ?: $matched;
                 $this->resolveValue($strName, $strValue);
                 return $strValue;
             }, $strClass);
+
+            $this->allowInlineStyles($strResult);
+
+            return $strResult;
         }
         return "";
+    }
+
+    /**
+     * Design strings may contain style attributes (e.g. background colors, the "limit width"
+     * picture proportions). With Contao's CSP enabled, these are blocked unless their hashes are
+     * allowed, so register them the same way as Contao's csp_unsafe_inline_style Twig filter.
+     * The values are built by the bundle and the project configuration, not by editors.
+     */
+    protected function allowInlineStyles(string $strHtml): void
+    {
+        if (!str_contains($strHtml, 'style=')) {
+            return;
+        }
+
+        $objResponseContext = System::getContainer()->get('contao.routing.response_context_accessor')->getResponseContext();
+
+        if (!$objResponseContext?->has(CspHandler::class)) {
+            return;
+        }
+
+        /** @var CspHandler $objCsp */
+        $objCsp = $objResponseContext->get(CspHandler::class);
+
+        preg_match_all('/\sstyle=(["\'])(.*?)\1/s', $strHtml, $arrMatches);
+
+        foreach (array_filter($arrMatches[2]) as $strStyle) {
+            // the browser hashes the decoded attribute value
+            $objCsp
+                ->addHash('style-src', html_entity_decode($strStyle, ENT_QUOTES | ENT_HTML5))
+                ->addSource('style-src', "'unsafe-hashes'");
+        }
     }
 
     public function getCtaClasses($arrData)
