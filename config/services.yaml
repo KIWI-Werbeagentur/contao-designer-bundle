@@ -19,7 +19,23 @@ services:
       - 'twig.extension'
   Kiwi\Contao\DesignerBundle\Migration\SyncColorVars: ~
   Kiwi\Contao\DesignerBundle\Migration\HeadlineLinesMigration: ~
-  Kiwi\Contao\DesignerBundle\DataContainer\ColorSchemeListener: ~
+  # Public: the DCA's legacy array callbacks resolve it via System::importStatic().
+  Kiwi\Contao\DesignerBundle\DataContainer\ColorSchemeListener:
+    public: true
   Kiwi\Contao\DesignerBundle\DataContainer\CtaListener: ~
   Kiwi\Contao\DesignerBundle\DataContainer\SectionHeadlineListener: ~
   Kiwi\Contao\DesignerBundle\Command\GenerateSchemesCommand: ~
+  Kiwi\Contao\DesignerBundle\Service\SchemesFileRegenerator:
+    arguments:
+      - '@filesystem'
+      - '@twig'
+      - '%kernel.project_dir%'
+      - '@Kiwi\Contao\DesignerBundle\Service\ThemeStylesInvalidator'
+  Kiwi\Contao\DesignerBundle\CacheWarmer\SchemesCacheWarmer: ~
+  # Positional arguments: named ones would make Symfony reflect the bootstrap class, which may be missing.
+  Kiwi\Contao\DesignerBundle\Service\ThemeStylesInvalidator:
+    public: true
+    arguments:
+      - '@contao.framework'
+      - '@?Kiwi\Contao\BootstrapBundle\Service\ThemeStylesInvalidator'
+      - '@?logger'
