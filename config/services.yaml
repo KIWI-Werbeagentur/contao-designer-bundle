@@ -22,3 +22,17 @@ services:
   Kiwi\Contao\DesignerBundle\DataContainer\CtaListener: ~
   Kiwi\Contao\DesignerBundle\DataContainer\SectionHeadlineListener: ~
   Kiwi\Contao\DesignerBundle\Command\GenerateSchemesCommand: ~
+  Kiwi\Contao\DesignerBundle\Service\SchemesFileRegenerator:
+    arguments:
+      - '@filesystem'
+      - '@twig'
+      - '%kernel.project_dir%'
+      - '@Kiwi\Contao\DesignerBundle\Service\ThemeStylesInvalidator'
+  Kiwi\Contao\DesignerBundle\CacheWarmer\SchemesCacheWarmer: ~
+  # Positional arguments: named ones would make Symfony reflect the bootstrap class, which may be missing.
+  Kiwi\Contao\DesignerBundle\Service\ThemeStylesInvalidator:
+    public: true
+    arguments:
+      - '@contao.framework'
+      - '@?Kiwi\Contao\BootstrapBundle\Service\ThemeStylesInvalidator'
+      - '@?logger'
