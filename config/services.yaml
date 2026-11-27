@@ -18,7 +18,9 @@ services:
     tags:
       - 'twig.extension'
   Kiwi\Contao\DesignerBundle\Migration\SyncColorVars: ~
-  Kiwi\Contao\DesignerBundle\DataContainer\ColorSchemeListener: ~
+  # Public: the DCA's legacy array callbacks resolve it via System::importStatic().
+  Kiwi\Contao\DesignerBundle\DataContainer\ColorSchemeListener:
+    public: true
   Kiwi\Contao\DesignerBundle\DataContainer\CtaListener: ~
   Kiwi\Contao\DesignerBundle\DataContainer\SectionHeadlineListener: ~
   Kiwi\Contao\DesignerBundle\Command\GenerateSchemesCommand: ~
