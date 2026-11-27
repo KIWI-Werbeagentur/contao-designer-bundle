@@ -27,15 +27,15 @@ class ThemeStylesInvalidator
      */
     public function invalidate(): void
     {
-        if ($this->bootstrapInvalidator !== null) {
-            $this->bootstrapInvalidator->invalidate();
-        } else {
-            try {
+        try {
+            if ($this->bootstrapInvalidator !== null) {
+                $this->bootstrapInvalidator->invalidate();
+            } else {
                 $this->framework->initialize();
                 $this->framework->createInstance(Automator::class)->purgeScriptCache();
-            } catch (\Throwable $e) {
-                $this->logger?->error('Failed to purge the script cache: {message}', ['message' => $e->getMessage(), 'exception' => $e]);
             }
+        } catch (\Throwable $e) {
+            $this->logger?->error('Failed to invalidate the compiled theme styles: {message}', ['message' => $e->getMessage(), 'exception' => $e]);
         }
     }
 }
